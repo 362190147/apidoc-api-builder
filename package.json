@@ -1,0 +1,17 @@
+{
+  "name": "apidoc-api-builder",
+  "version": "0.0.1",
+  "description": "Using apidoc to generate typescript or kotlin code",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [
+    "apidoc"
+  ],
+  "author": "",
+  "license": "ISC",
+  "devDependencies": {
+    "@types/node": "^16.0.0"
+  }
+}
