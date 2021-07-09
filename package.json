@@ -6,7 +6,7 @@
   "scripts": {
     "build": "tsc --declaration",
     "test1": "ts-node ./bin/cli.ts -t ts -s D:/project/node/botserver/apidoc/api_data.json -d D:/project/node/oxox2/src/js/api.ts",
-    "test2": "apidoc-api-builder -t ts -s D:/project/node/botserver/apidoc/api_data.json -d D:/project/node/oxox2/src/js/api.ts"
+    "test2": "apibuilder -t ts -s D:/project/node/botserver/apidoc/api_data.json -d D:/project/node/oxox2/src/js/api.ts"
   },
   "files": [
     "lib/**/*"

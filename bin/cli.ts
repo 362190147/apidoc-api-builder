@@ -17,8 +17,8 @@ interface Arguments {
 
 let parser = yargs(hideBin(process.argv)).options({
     t: { choices: ['ts', 'kotlin'], alias: 'type', demandOption: true },
-    s: { type: 'string', alias: 'src', demandOption: true},//api_data.json path
-    d: { type: 'string', alias: 'dist', demandOption: true},//dits path
+    s: { type: 'string', alias: 'src', demandOption: true },//api_data.json path
+    d: { type: 'string', alias: 'dist', demandOption: true },//dits path
     p: { type: 'string', alias: 'package' },//kotlin 
 })
     .usage('Usage: apibuilder -t [type] -s [api_data.json path] -d [dist path]  [-p] [kotlin package]');
@@ -28,33 +28,33 @@ let parser = yargs(hideBin(process.argv)).options({
 
     const argv = await parser.argv;
 
-    if(!argv.d) {
+    if (!argv.d) {
         console.error("miss argv d")
         return;
     }
-    if(!argv.s) {
+    if (!argv.s) {
         console.error("miss argv s")
         return;
     }
-    if(!argv.t) {
+    if (!argv.t) {
         console.error("miss argv t")
         return;
     }
-    let api_data  = fs.readFileSync(argv.s).toString()
-    let path = argv.d 
+    let api_data = fs.readFileSync(argv.s).toString()
+    let path = argv.d
 
     if (argv.type == "kotlin") {
-        if(!argv.p){
+        if (!argv.p) {
             console.error("kotlin need argv p")
             return;
         }
-        
-        let builder=new KotlinBuilder(api_data);
-        let apiCode=builder.BuildApiClass(argv.p)
-        let dataCode=builder.BuildDataClass(argv.p)
+
+        let builder = new KotlinBuilder(api_data);
+        let apiCode = builder.BuildApiClass(argv.p)
+        let dataCode = builder.BuildDataClass(argv.p)
         fs.writeFileSync(path + "/data/Datas.kt", dataCode)
         fs.writeFileSync(path + "/Api.kt", apiCode)
-    } else if (argv.type == "ts") {             
+    } else if (argv.type == "ts") {
         let code = new TsBuilder(api_data).build();
         fs.writeFileSync(argv.d, code)
     }

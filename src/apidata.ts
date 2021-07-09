@@ -1,3 +1,11 @@
+export interface Field{
+  group: string,
+  type: string,
+  optional: boolean,
+  field: string,
+  description: string
+}
+
 export interface ApiData {
     type: string,
     url: string,
