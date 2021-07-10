@@ -26,9 +26,9 @@ class KotlinClass {
 }
 
 
-export class KotlinBuilder  extends Generater{
-  apiFileHead: string = 
-  `import retrofit2.http.*
+export class KotlinBuilder extends Generater {
+  apiFileHead: string =
+    `import retrofit2.http.*
 import retrofit2.http.Field
 import retrofit2.http.FormUrlEncoded
 import retrofit2.http.POST
@@ -65,26 +65,52 @@ import java.io.File
     let params = ""
     let FormUrlEncoded = "\n   @FormUrlEncoded";
     let filed = "@Field";
-    if (method == "GET"){
+    let funName = this.underlineToHump(apiData.name);
+    if (method == "GET") {
       FormUrlEncoded = "";
-      filed="@Query";
-    } 
+      filed = "@Query";
+    }
+
     //获取返回类型 
     let ktType = this.getReturnType(apiData)// 
+    let urlData = KotlinBuilder.getUrlData(apiData.url);
 
-   
     apiData.parameter?.fields?.Parameter.forEach((p, i) => {
-      if (i !== 0) params += `, `
+      if (urlData.names.find(el => { return el == p.field })) { return; } //检测出path参数，避免重复
+      if (i !== 0 || urlData.names.length > 0) params += `, `
       let param = p.field
       let type = this.toKotlinType(p.type)
       params += `${filed}("${p.field}") ${param}: ${type}${p.optional ? "?" : ""}`
     })
     let code =
-`  
-   @${method}("${apiData.url}")${FormUrlEncoded}
-   suspend fun ${apiData.name}(${params}):${retrunType}<${ktType}>
+      `  
+   @${method}("${urlData.url}")${FormUrlEncoded}
+   suspend fun ${funName}(${urlData.param}${params}):${retrunType}<${ktType}>
 `;
     this.saveaToApiclass(apiData.group, code);
+  }
+
+
+  static getUrlData(url: string) {
+    let s = {
+      url: url,// 转化后的api
+      param: "",// retrofit @path形式的参数
+      names: <string[]>[]//存储名字避免参数重复
+    }
+    let matched = url.match(/\:(\w+)/g);
+    if (matched) {
+      matched.forEach((el, i) => {
+        let name = el.substr(1);
+        s.names.push(name);
+        if (i != 0) s.param = ", "
+        s.param += `@Path("${name}") ${name}:String`
+        console.log(el);
+      })
+    }
+
+    s.url = url.replace(/\:(\w+)/g, "{$1}");
+
+    return s;
   }
 
 
@@ -94,22 +120,22 @@ import java.io.File
    * @param apiData 
    * @returns 返回类型
    */
-  getReturnType( apiData:ApiData){
+  getReturnType(apiData: ApiData) {
     let ktType = "Object";
     let success = apiData.success?.fields?.["Success 200"]
-    let dataClass:KotlinClass = new KotlinClass("Object","","",")\n")
-    
-    success?.forEach((el,i) => {
-      if(/data/.test(el.field)){
-        if(el.field=="data"){
+    let dataClass: KotlinClass = new KotlinClass("Object", "", "", ")\n")
+
+    success?.forEach((el, i) => {
+      if (/data/.test(el.field)) {
+        if (el.field == "data") {
           ktType = this.toKotlinType(el.type)
           dataClass.name = this.getNotArrayType(el.type)
-          dataClass.codeHead=`data class ${dataClass.name}(`
+          dataClass.codeHead = `data class ${dataClass.name}(`
           //console.log(ktType);
         }
-        let matched =el.field.match(/data\.(\w+)/)
-        if(matched){
-          if(dataClass.codeBody!=""){  dataClass.codeBody+=","}
+        let matched = el.field.match(/data\.(\w+)/)
+        if (matched) {
+          if (dataClass.codeBody != "") { dataClass.codeBody += "," }
           dataClass.codeBody += `var ${matched[1]}: ${this.getNotArrayType(el.type)}`
         }
         //console.log(el.field);
@@ -119,31 +145,31 @@ import java.io.File
     return ktType;
   }
 
-saveToDataClass(dataClass:KotlinClass){
-  switch(dataClass.name){
-    case "":
-    case "String":
-    case "string":
-    case "number":
-    case "Number":
-    case "Boolean":
-    case "boolean":
-    case "Object":
-      return
-    default:
+  saveToDataClass(dataClass: KotlinClass) {
+    switch (dataClass.name) {
+      case "":
+      case "String":
+      case "string":
+      case "number":
+      case "Number":
+      case "Boolean":
+      case "boolean":
+      case "Object":
+        return
+      default:
         break;
-  }
-  let data= this.dataClasses.find(el => { return el.name == dataClass.name})
-  if(data){return ;}
-  this.dataClasses.push(dataClass);
-  
-}
+    }
+    let data = this.dataClasses.find(el => { return el.name == dataClass.name })
+    if (data) { return; }
+    this.dataClasses.push(dataClass);
 
-/**
- * 存储调用api接口代码
- * @param className 
- * @param funCode 
- */
+  }
+
+  /**
+   * 存储调用api接口代码
+   * @param className 
+   * @param funCode 
+   */
   saveaToApiclass(className: string, funCode: string) {
     let apiClass = this.apiClasses.find(el => { return el.name == className })
     if (!apiClass) {
@@ -154,7 +180,7 @@ saveToDataClass(dataClass:KotlinClass){
     }
     apiClass.codeBody += funCode;
   }
-  
+
   /**
    * 将apidoc类型转换为kotlin类型
    * string转为
@@ -182,18 +208,18 @@ saveToDataClass(dataClass:KotlinClass){
         break;
     }
     let matched = apiType.match(/(\w+)\[\]/)
-    if(matched){
-      let t:string = this.toKotlinType(matched[1])
-      return "List<"+t+">"
+    if (matched) {
+      let t: string = this.toKotlinType(matched[1])
+      return "List<" + t + ">"
     }
     return apiType;
   }
 
-  getNotArrayType(apiType: string){
+  getNotArrayType(apiType: string) {
     let matched = apiType.match(/(\w+)\[\]/)
-    if(matched){
-      return  this.toKotlinType(matched[1]);
-    }else{
+    if (matched) {
+      return this.toKotlinType(matched[1]);
+    } else {
       return this.toKotlinType(apiType);
     }
   }
@@ -202,25 +228,25 @@ saveToDataClass(dataClass:KotlinClass){
   /** */
   BuildApiClass(packageName: string) {
     let apiCode =
-`package ${packageName}
+      `package ${packageName}
 ${this.apiFileHead}
 import ${packageName}.data.*
 `;
     this.apiClasses.forEach(el => {
       apiCode += el.toString()
     })
-   return apiCode;
+    return apiCode;
 
   }
 
-  BuildDataClass(packageName: string){
+  BuildDataClass(packageName: string) {
     let dataCode =
-    `package ${packageName}.data
+      `package ${packageName}.data
     `;
     this.dataClasses.forEach(el => {
       dataCode += el.toString()
     })
-   
+
     return dataCode;
 
   }

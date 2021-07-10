@@ -38,7 +38,8 @@ export class TsBuilder extends Generater {
     }
 
     build() {
-        let code = `import axios from "axios"
+        let code = `// 自动生成代码，不建议修改，因为再次生成时候被覆盖，除非你确定不会再次自动生成或者是不关心修改内容
+import axios from "axios"
 import qs from "qs"
 
 export function getBaseUrl() {
@@ -50,13 +51,24 @@ export function getApidoc() {
 }
 
 export function post(url: string, postData: any) {
-    return axios.post(url, qs.stringify(postData)).then(s=>{
+    return axios.post(url, qs.stringify(postData)).then(s => {
+        return s.data
+    })
+}
+
+export function put(url: string, postData: any) {
+    return axios.put(url, qs.stringify(postData)).then(s => {
+        return s.data
+    })
+}
+export function deleteUrl(url: string, postData: any) {
+    return axios.delete(url + qs.stringify(postData)).then(s => {
         return s.data
     })
 }
 
 export function get(url: string, postData: any) {
-    return axios.get(url + "?" + qs.stringify(postData)).then(s=>{
+    return axios.get(url + "?" + qs.stringify(postData)).then(s => {
         return s.data
     })
 }
