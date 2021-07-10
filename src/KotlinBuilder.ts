@@ -63,11 +63,10 @@ import java.io.File
   generateFun(apiData: ApiData, retrunType: string) {
     let method = apiData.type.toLocaleUpperCase();
     let params = ""
-    let FormUrlEncoded = "\n   @FormUrlEncoded";
+    let FormUrlEncoded =""
     let filed = "@Field";
     let funName = this.underlineToHump(apiData.name);
     if (method == "GET") {
-      FormUrlEncoded = "";
       filed = "@Query";
     }
 
@@ -82,6 +81,11 @@ import java.io.File
       let type = this.toKotlinType(p.type)
       params += `${filed}("${p.field}") ${param}: ${type}${p.optional ? "?" : ""}`
     })
+
+    //@FormUrlEncoded 无@Field的时候会出错
+    if(method=="POST" && params){
+      FormUrlEncoded = "\n   @FormUrlEncoded";
+    }
     let code =
       `  
    @${method}("${urlData.url}")${FormUrlEncoded}
