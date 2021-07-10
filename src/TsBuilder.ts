@@ -25,14 +25,14 @@ export class TsBuilder extends Generater {
             case "Boolean":
             case "boolean":
             case "float":
-                return "number" 
+                return "number"
             default:
                 break;
         }
         let matched = apiType.match(/(\w+)\[\]/)
         if (matched) {
             let t: string = this.toTsType(matched[1])
-            return  t + "[]"
+            return t + "[]"
         }
         return "any";
     }
@@ -42,36 +42,60 @@ export class TsBuilder extends Generater {
 import axios from "axios"
 import qs from "qs"
 
-export function getBaseUrl() {
-    return "http://" + window.location.hostname + ":3001"
-}
+export class Api {
+    private static api:Api
+    vue:any
+    constructor(){
+        
+    }
+    get headers(){
+        if(this.vue){
+            return {"oxoxauth":this.vue.$cookies.get("logincode")};
+        }else{
+            return null
+        }
+    }
 
-export function getApidoc() {
-    return getBaseUrl() + "/apidoc/index.html"
-}
+    static getApi(){
+        if(!Api.api){
+            Api.api=new Api()
+            }
+            return Api.api;
+    }
+        
+    getBaseUrl() {
+        return "http://" + window.location.hostname + ":3001"
+    }
+        
+    getApidoc() {
+        return this.getBaseUrl() + "/apidoc/index.html"
+    }
+        
 
-export function post(url: string, postData: any) {
-    return axios.post(url, qs.stringify(postData)).then(s => {
-        return s.data
-    })
-}
+    get(url: string, postData: any) {
+        return axios.get(url + qs.stringify(postData),{ headers:this.headers }).then(s => {
+            return s.data
+        });
+    }
 
-export function put(url: string, postData: any) {
-    return axios.put(url, qs.stringify(postData)).then(s => {
-        return s.data
-    })
-}
-export function deleteUrl(url: string, postData: any) {
-    return axios.delete(url + qs.stringify(postData)).then(s => {
-        return s.data
-    })
-}
 
-export function get(url: string, postData: any) {
-    return axios.get(url + "?" + qs.stringify(postData)).then(s => {
-        return s.data
-    })
-}
+    post(url: string, postData: any) {
+        return axios.post(url, qs.stringify(postData), { headers:this.headers }).then(s => {
+            return s.data
+        });
+    }
+        
+    put(url: string, postData: any) {
+        return axios.put(url, qs.stringify(postData),{ headers:this.headers }).then(s => {
+            return s.data
+        });
+    }
+    deleteUrl(url: string, postData: any) {
+        return axios.delete(url + qs.stringify(postData),{ headers:this.headers }).then(s => {
+            return s.data
+        });
+    }
+            
 `
         this.apiDatas.forEach((el, i: number) => {
             let params = ""
@@ -87,12 +111,13 @@ export function get(url: string, postData: any) {
 
             let name = this.underlineToHump(el.name);
             code += `
-export function ${name}(${params}) {
+  ${name}(${params}) {
     let postData: any = {};${setData}
-    return ${el.type}(getBaseUrl() + "${el.url}", postData);
+    return this.${el.type}(this.getBaseUrl() + "${el.url}", postData);
 }
 `
         });
+        code += "\n}"
         return code;
     }
 }
