@@ -37,6 +37,60 @@ export class TsBuilder extends Generater {
         return "any";
     }
 
+
+    static getUrlData(url: string) {
+        let s = {
+          url: url,// 转化后的api
+          param: "",// retrofit @path形式的参数
+          names: <string[]>[]//存储名字避免参数重复
+        }
+        let matched = url.match(/\:(\w+)/g);
+        // if (matched) {
+        //   matched.forEach((el, i) => {
+        //     let name = el.substr(1);
+        //     s.names.push(name);
+        //     if (i != 0) s.param = ", "
+        //     s.param += `${name}:string`
+        //     console.log(el);
+        //   })
+        // }
+    
+        s.url = url.replace(/\:(\w+)/g, "${$1}");
+    
+        return s;
+      }
+    
+
+    generateFun(apiData: ApiData) {
+        let code = ""
+        let params = ""
+        let postData = ""
+        let url= TsBuilder.getUrlData(apiData.url)
+
+        apiData.parameter?.fields?.Parameter.forEach((param, i: number) => {
+            if (i !== 0) params += `, `
+            let field = this.underlineToHump(param.field)
+            if (!param.type) {
+                console.error(param)
+                return;
+            }
+            let tstype = this.toTsType(param.type)
+            params += `${field}: ${tstype}${param.optional ? " | null" : ""}`
+
+            if(url.names.find(el=>{return el==param.field})){return;}
+
+            postData += `\n    postData.${param.field} = ${field};`
+        });
+
+        let name = this.underlineToHump(apiData.name);
+        code += `
+  ${name}(${params}) {
+    let postData: any = {};${postData}
+    return this.${apiData.type}(this.getBaseUrl() + \`${url.url}\`, postData);
+}`;
+        return code;
+    }
+
     build() {
         let code = `// 自动生成代码，不建议修改，因为再次生成时候被覆盖，除非你确定不会再次自动生成或者是不关心修改内容
 import axios from "axios"
@@ -90,7 +144,7 @@ export class Api {
             return s.data
         });
     }
-    deleteUrl(url: string, postData: any) {
+    delete(url: string, postData: any) {
         return axios.delete(url + qs.stringify(postData),{ headers:this.headers }).then(s => {
             return s.data
         });
@@ -98,24 +152,7 @@ export class Api {
             
 `
         this.apiDatas.forEach((el, i: number) => {
-            let params = ""
-            let setData = ""
-
-            el.parameter?.fields?.Parameter.forEach((param, i: number) => {
-                if (i !== 0) params += `, `
-                let field = this.underlineToHump(param.field)
-                let tstype = this.toTsType(param.type)
-                params += `${field}: ${tstype}${param.optional ? " | null" : ""}`
-                setData += `\n    postData.${param.field} = ${field};`
-            });
-
-            let name = this.underlineToHump(el.name);
-            code += `
-  ${name}(${params}) {
-    let postData: any = {};${setData}
-    return this.${el.type}(this.getBaseUrl() + "${el.url}", postData);
-}
-`
+          code += this.generateFun(el);
         });
         code += "\n}"
         return code;
