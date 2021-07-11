@@ -127,7 +127,7 @@ export class Api {
         
 
     get(url: string, postData: any) {
-        return axios.get(url + qs.stringify(postData),{ headers:this.headers }).then(s => {
+        return axios.get(url + "?" +qs.stringify(postData),{ headers:this.headers }).then(s => {
             return s.data
         });
     }
@@ -145,7 +145,7 @@ export class Api {
         });
     }
     delete(url: string, postData: any) {
-        return axios.delete(url + qs.stringify(postData),{ headers:this.headers }).then(s => {
+        return axios.delete(url + "?" + qs.stringify(postData),{ headers:this.headers }).then(s => {
             return s.data
         });
     }
