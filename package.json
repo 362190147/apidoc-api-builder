@@ -1,6 +1,6 @@
 {
-  "name": "apidoc-api-builder",
-  "version": "0.0.2",
+  "name": "apidoc-codegen",
+  "version": "0.0.1",
   "description": "Using apidoc to generate typescript or kotlin code",
   "main": "index.ts",
   "scripts": {
@@ -16,7 +16,7 @@
     "apibuilder": "bin/cli.js"
   },
   "keywords": [
-    "apidoc"
+    "apicodegen"
   ],
   "author": "",
   "license": "ISC",
