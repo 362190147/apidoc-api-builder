@@ -1,4 +1,4 @@
-import { ApiData } from "./apidata"
+import { ApiData, Field } from "./apidata"
 import { Generater } from "./Generater"
 /**
  * 通过Apidoc 中的api_data.json生成 数据类 和 调用请求的接口
@@ -33,7 +33,6 @@ import retrofit2.http.Field
 import retrofit2.http.FormUrlEncoded
 import retrofit2.http.POST
 import java.io.File
-
 `
   private dataClasses: KotlinClass[] = []
   private apiClasses: KotlinClass[] = []
@@ -73,8 +72,9 @@ import java.io.File
     //获取返回类型 
     let ktType = this.getReturnType(apiData)// 
     let urlData = KotlinBuilder.getUrlData(apiData.url);
+    let parameter = this.getFields(apiData.parameter?.fields);
 
-    apiData.parameter?.fields?.Parameter.forEach((p, i) => {
+     parameter?.forEach((p:Field, i:number) => {
       if (urlData.names.find(el => { return el == p.field })) { return; } //检测出path参数，避免重复
       if (i !== 0 || urlData.names.length > 0) params += `, `
       let param = p.field
@@ -126,10 +126,11 @@ import java.io.File
    */
   getReturnType(apiData: ApiData) {
     let ktType = "Object";
-    let success = apiData.success?.fields?.["Success 200"]
+    //let success = apiData.success?.fields?.["Success 200"]
     let dataClass: KotlinClass = new KotlinClass("Object", "", "", ")\n")
+    let success = this.getFields(apiData.success?.fields);
 
-    success?.forEach((el, i) => {
+    success?.forEach((el:Field, i:number) => {
       if (/data/.test(el.field)) {
         if (el.field == "data") {
           ktType = this.toKotlinType(el.type)

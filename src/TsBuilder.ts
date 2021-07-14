@@ -1,5 +1,5 @@
 
-import { ApiData } from "./apidata";
+import { ApiData, Field } from "./apidata";
 import { Generater } from "./Generater";
 
 /**
@@ -67,7 +67,7 @@ export class TsBuilder extends Generater {
         let postData = ""
         let url= TsBuilder.getUrlData(apiData.url)
 
-        apiData.parameter?.fields?.Parameter.forEach((param, i: number) => {
+        apiData.parameter?.fields?.Parameter.forEach((param:Field, i: number) => {
             if (i !== 0) params += `, `
             let field = this.underlineToHump(param.field)
             if (!param.type) {

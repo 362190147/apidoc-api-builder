@@ -6,7 +6,7 @@
   "scripts": {
     "build": "tsc --declaration",
     "tsapi": "ts-node ./bin/cli.ts -t ts -s D:/project/node/botserver/apidoc/api_data.json -d D:/project/node/oxox2/src/js/api.ts",
-    "ktapi":"ts-node ./bin/cli.ts  -t kotlin -s D:/project/node/botserver/apidoc/api_data.json -d D:/project/android/OxCore/oxapi/src/main/java/ltd/oxox/oxapi -p ltd.oxox.oxapi",
+    "ktapi": "ts-node ./bin/cli.ts  -t kotlin -s D:/project/node/botserver/apidoc/api_data.json -d D:/project/android/OxCore/oxapi/src/main/java/ltd/oxox/oxapi -p ltd.oxox.oxapi",
     "test2": "apibuilder -t ts -s D:/project/node/botserver/apidoc/api_data.json -d D:/project/node/oxox2/src/js/api.ts"
   },
   "files": [

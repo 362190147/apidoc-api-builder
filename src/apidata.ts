@@ -14,30 +14,10 @@ export interface ApiData {
     name: string,
     group: string,
     parameter?: {
-      fields?: {
-        Parameter: [
-          {
-            group: string,
-            type: string,
-            optional: false,
-            field: string,
-            description: string
-          }
-        ]
-      }
+      fields?:any
     },
     success?: {
-      fields?: {
-        "Success 200": [
-          {
-            group: string,
-            type: string,
-            optional: false,
-            field: string,
-            description: string
-          }
-        ]
-      },
+      fields?: any,
       examples: [
         {
           title: string,
