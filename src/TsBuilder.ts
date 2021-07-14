@@ -66,8 +66,8 @@ export class TsBuilder extends Generater {
         let params = ""
         let postData = ""
         let url= TsBuilder.getUrlData(apiData.url)
-
-        apiData.parameter?.fields?.Parameter.forEach((param:Field, i: number) => {
+        let parameter = this.getFields(apiData.parameter?.fields);
+        parameter?.forEach((param:Field, i: number) => {
             if (i !== 0) params += `, `
             let field = this.underlineToHump(param.field)
             if (!param.type) {
