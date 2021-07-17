@@ -4,6 +4,8 @@ const { hideBin } = require('yargs/helpers');
 import { TsBuilder } from "../src/TsBuilder";
 import fs from "fs"
 import { KotlinBuilder } from '../src/KotlinBuilder';
+import path from 'path';
+
 interface Arguments {
     [x: string]: unknown;
     a: boolean;
@@ -41,7 +43,7 @@ let parser = yargs(hideBin(process.argv)).options({
         return;
     }
     let api_data = fs.readFileSync(argv.s).toString()
-    let path = argv.d
+    let dist_path = argv.d
 
     if (argv.type == "kotlin") {
         if (!argv.p) {
@@ -52,11 +54,18 @@ let parser = yargs(hideBin(process.argv)).options({
         let builder = new KotlinBuilder(api_data);
         let apiCode = builder.BuildApiClass(argv.p)
         let dataCode = builder.BuildDataClass(argv.p)
-        fs.writeFileSync(path + "/data/Datas.kt", dataCode)
-        fs.writeFileSync(path + "/Api.kt", apiCode)
+        fs.writeFileSync(path.join(dist_path ,"/data/Datas.kt"), dataCode)
+        fs.writeFileSync(path.join(dist_path , "/Api.kt"), apiCode)
     } else if (argv.type == "ts") {
-        let code = new TsBuilder(api_data).build();
-        fs.writeFileSync(argv.d, code)
+        let tsBuilder = new TsBuilder(api_data)
+        let template = fs.readFileSync(path.join(__dirname, "../template/tshead.ts")).toString();
+        tsBuilder.template = template;
+        console.log(template)
+        let code = tsBuilder.build();
+        fs.writeFileSync(path.join(dist_path, "/api.ts"), code)
+        code = tsBuilder.buildData();
+        fs.writeFileSync(path.join(dist_path, "/data.ts"), code)
+        
     }
 
 

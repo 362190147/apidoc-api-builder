@@ -2,17 +2,46 @@
 import { ApiData, Field } from "./apidata";
 import { Generater } from "./Generater";
 
+class dataMember {
+    name: string
+    type: string
+    constructor(name: string, type: string) {
+        this.name = name;
+        this.type = type;
+    }
+}
+
+class TsData {
+    name: string
+    members: dataMember[] = []
+
+    constructor(name: string) {
+        this.name = name;
+    }
+    toString() {
+        let memberStr = ""
+        this.members.forEach(el => {
+            console.debug(el);
+            memberStr += `${el.name}: ${el.type}| undefined\n`
+        })
+        return `class ${this.name}{
+          ${memberStr}
+      }\n`
+    }
+}
+
 /**
  * 通过apidoc生成 api调用函数的工具
  * @param api_data apidoc生成文件的路径下的 api_data.json 文件内容
  * @returns string  生成ts代码
  */
 export class TsBuilder extends Generater {
+    template: string = ""
+    tsDatas: TsData[] = [];
 
     constructor(api_data: string) {
         super(api_data);
     }
-
 
     toTsType(apiType: string) {
         switch (apiType) {
@@ -21,11 +50,14 @@ export class TsBuilder extends Generater {
                 return "string";
             case "number":
             case "Number":
+            case "Long":
+            case "long":
+            case "float":
+            case "Float":
                 return "number"
             case "Boolean":
             case "boolean":
-            case "float":
-                return "number"
+                return "boolean"
             default:
                 break;
         }
@@ -34,51 +66,89 @@ export class TsBuilder extends Generater {
             let t: string = this.toTsType(matched[1])
             return t + "[]"
         }
+        if (this.tsDatas.find(el => { return el.name == apiType })) return apiType;
         return "any";
     }
 
 
     static getUrlData(url: string) {
         let s = {
-          url: url,// 转化后的api
-          param: "",// retrofit @path形式的参数
-          names: <string[]>[]//存储名字避免参数重复
+            url: url,// 转化后的api
+            param: "",// retrofit @path形式的参数
+            names: <string[]>[]//存储名字避免参数重复
         }
         let matched = url.match(/\:(\w+)/g);
-        // if (matched) {
-        //   matched.forEach((el, i) => {
-        //     let name = el.substr(1);
-        //     s.names.push(name);
-        //     if (i != 0) s.param = ", "
-        //     s.param += `${name}:string`
-        //     console.log(el);
-        //   })
-        // }
-    
+        if (matched) {
+            matched.forEach((el, i) => {
+                let name = el.substr(1);
+                s.names.push(name);
+                if (i != 0) s.param = ", "
+                s.param += `${name}:string`
+                //console.log(el);
+            })
+        }
+
         s.url = url.replace(/\:(\w+)/g, "${$1}");
-    
         return s;
-      }
-    
+    }
+
+    generateDataclass(parameter: Field[]|null) {
+        let num = 0;
+        parameter?.forEach((param: Field, i: number) => {
+            if (param.group == "Parameter") {
+                num++;
+                return;
+            }
+            console.error(param.group)
+            let tsData = this.tsDatas.find(el => { return el.name == param.group })
+            if (!tsData) {
+                tsData = new TsData(param.group)
+                this.tsDatas.push(tsData);
+            }
+            let member = tsData.members.find(el => { return el.name == param.field })
+            if (!member) {
+                tsData.members.push(new dataMember(param.field, this.toTsType(param.type)));
+            }
+        });
+        return num;
+    }
 
     generateFun(apiData: ApiData) {
         let code = ""
         let params = ""
         let postData = ""
-        let url= TsBuilder.getUrlData(apiData.url)
+        let url = TsBuilder.getUrlData(apiData.url)
         let parameter = this.getFields(apiData.parameter?.fields);
-        parameter?.forEach((param:Field, i: number) => {
-            if (i !== 0) params += `, `
+        //console.log(url);
+        url.names.forEach((name: string, i: number) => {
+            if (params) params += `, `
+            params += `${name}: string`
+            //console.log(name);
+        });
+
+     
+                
+        let num = this.generateDataclass( parameter);
+       
+
+        parameter?.forEach((param: Field, i: number) => {
             let field = this.underlineToHump(param.field)
-            if (!param.type) {
-                console.error(param)
+            if (param.group != "Parameter") {
+                if(num == 0){
+                    let name=this.firstToLower(param.group)
+                    params=`${name}:${param.group}`
+                    postData=`\n    postData=${name}`
+                }
                 return;
             }
             let tstype = this.toTsType(param.type)
-            params += `${field}: ${tstype}${param.optional ? " | null" : ""}`
-
-            if(url.names.find(el=>{return el==param.field})){return;}
-
+            let temp = `${field}: ${tstype}${param.optional ? " | null" : ""}`
+            if (url.names.find(el => { return el == param.field })) {
+                params = params.replace(`${param.field}: string`, temp)
+                return;
+            }
+            if (params) params += `, `
+            params += temp;
             postData += `\n    postData.${param.field} = ${field};`
         });
 
@@ -92,71 +162,25 @@ export class TsBuilder extends Generater {
     }
 
     build() {
-        let code = `// 自动生成代码，不建议修改，因为再次生成时候被覆盖，除非你确定不会再次自动生成或者是不关心修改内容
-import axios from "axios"
-import qs from "qs"
-
-export class Api {
-    private static api:Api
-    vue:any
-    constructor(){
-        
-    }
-    get headers(){
-        if(this.vue){
-            return {"oxoxauth":this.vue.$cookies.get("logincode")};
-        }else{
-            return null
-        }
-    }
-
-    static getApi(){
-        if(!Api.api){
-            Api.api=new Api()
-            }
-            return Api.api;
-    }
-        
-    getBaseUrl() {
-        return "http://" + window.location.hostname + ":3001"
-    }
-        
-    getApidoc() {
-        return this.getBaseUrl() + "/apidoc/index.html"
-    }
-        
-
-    get(url: string, postData: any) {
-        return axios.get(url + "?" +qs.stringify(postData),{ headers:this.headers }).then(s => {
-            return s.data
-        });
-    }
-
-
-    post(url: string, postData: any) {
-        return axios.post(url, qs.stringify(postData), { headers:this.headers }).then(s => {
-            return s.data
-        });
-    }
-        
-    put(url: string, postData: any) {
-        return axios.put(url, qs.stringify(postData),{ headers:this.headers }).then(s => {
-            return s.data
-        });
-    }
-    delete(url: string, postData: any) {
-        return axios.delete(url + "?" + qs.stringify(postData),{ headers:this.headers }).then(s => {
-            return s.data
-        });
-    }
-            
-`
+        let code = ""
         this.apiDatas.forEach((el, i: number) => {
-          code += this.generateFun(el);
+            code += this.generateFun(el);
         });
-        code += "\n}"
-        return code;
+        //code += "\n}"
+
+        return this.template.replace("/**replace*/", code)
     }
+
+    buildData() {
+        let code = ""
+        this.tsDatas.forEach((el, i: number) => {
+            code += el.toString();
+        });
+        //code += "\n}"
+
+        return code
+    }
+
 }
 
 

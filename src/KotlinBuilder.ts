@@ -91,7 +91,7 @@ import java.io.File
    @${method}("${urlData.url}")${FormUrlEncoded}
    suspend fun ${funName}(${urlData.param}${params}):${retrunType}<${ktType}>
 `;
-    this.saveaToApiclass(apiData.group, code);
+    this.saveToApiclass(apiData.group, code);
   }
 
 
@@ -111,12 +111,12 @@ import java.io.File
         console.log(el);
       })
     }
-
     s.url = url.replace(/\:(\w+)/g, "{$1}");
-
     return s;
   }
 
+
+  
 
   /**
    * 获取返回类型
@@ -126,7 +126,6 @@ import java.io.File
    */
   getReturnType(apiData: ApiData) {
     let ktType = "Object";
-    //let success = apiData.success?.fields?.["Success 200"]
     let dataClass: KotlinClass = new KotlinClass("Object", "", "", ")\n")
     let success = this.getFields(apiData.success?.fields);
 
@@ -175,7 +174,7 @@ import java.io.File
    * @param className 
    * @param funCode 
    */
-  saveaToApiclass(className: string, funCode: string) {
+  saveToApiclass(className: string, funCode: string) {
     let apiClass = this.apiClasses.find(el => { return el.name == className })
     if (!apiClass) {
       //console.log("new "+className)

@@ -18,6 +18,10 @@ export class Generater {
         return result
     }
 
+    firstToLower(str:string){
+        return str.replace(str[0],str[0].toLowerCase());
+    }
+
     // 驼峰转下划线
     humpToUnderline(str: string) {
         return str.replace(/([A-Z])/g, "_$1").toLowerCase()
@@ -32,7 +36,7 @@ export class Generater {
                 fields.push(o)
             }
         }
-        console.log(fields);
+        //console.log(fields);
         return fields;
     }
 
@@ -46,7 +50,7 @@ export class Generater {
             }
         }
        
-        console.log(params);
+        //console.log(params);
         return params;
     }
 }
