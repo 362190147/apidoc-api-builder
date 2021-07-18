@@ -1,5 +1,7 @@
 import axios from "axios"
 import qs from "qs"
+ 
+/**data*/
 
 export class Api {
     private static api:Api
@@ -54,6 +56,6 @@ export class Api {
             return s.data
         });
     }
-    /**replace*/
+    /**fun*/
 
 }

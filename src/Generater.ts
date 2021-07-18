@@ -1,5 +1,9 @@
 import { ApiData, Field } from "./apidata";
-
+export interface UrlData {
+    url: string,// 转化后的api
+    param: string,// retrofit @path形式的参数
+    names: string[]//存储名字避免参数重复
+}
 
 export class Generater {
 

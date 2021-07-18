@@ -1,6 +1,6 @@
 
 import { ApiData, Field } from "./apidata";
-import { Generater } from "./Generater";
+import { Generater, UrlData } from "./Generater";
 
 class dataMember {
     name: string
@@ -14,7 +14,6 @@ class dataMember {
 class TsData {
     name: string
     members: dataMember[] = []
-
     constructor(name: string) {
         this.name = name;
     }
@@ -24,7 +23,7 @@ class TsData {
             console.debug(el);
             memberStr += `${el.name}: ${el.type}| undefined\n`
         })
-        return `class ${this.name}{
+        return `export class ${this.name}{
           ${memberStr}
       }\n`
     }
@@ -72,10 +71,10 @@ export class TsBuilder extends Generater {
 
 
     static getUrlData(url: string) {
-        let s = {
+        let s: UrlData= {
             url: url,// 转化后的api
             param: "",// retrofit @path形式的参数
-            names: <string[]>[]//存储名字避免参数重复
+            names: []//存储名字避免参数重复
         }
         let matched = url.match(/\:(\w+)/g);
         if (matched) {
@@ -92,10 +91,13 @@ export class TsBuilder extends Generater {
         return s;
     }
 
-    generateDataclass(parameter: Field[]|null) {
+    generateDataclass(parameter: Field[]|null,urlData:UrlData) {
         let num = 0;
         parameter?.forEach((param: Field, i: number) => {
             if (param.group == "Parameter") {
+                if (urlData.names.find(el => { return el == param.field })) {
+                    return;
+                }
                 num++;
                 return;
             }
@@ -126,23 +128,23 @@ export class TsBuilder extends Generater {
             //console.log(name);
         });
 
-     
-                
-        let num = this.generateDataclass( parameter);
+        let num = this.generateDataclass( parameter,url);
        
-
         parameter?.forEach((param: Field, i: number) => {
             let field = this.underlineToHump(param.field)
             if (param.group != "Parameter") {
                 if(num == 0){
-                    let name=this.firstToLower(param.group)
-                    params=`${name}:${param.group}`
+                    num=1;
+                    let name=this.firstToLower(param.group);
+                    if (params) params += `, `;
+                    params += `${name}:${param.group}`
                     postData=`\n    postData=${name}`
                 }
                 return;
             }
             let tstype = this.toTsType(param.type)
             let temp = `${field}: ${tstype}${param.optional ? " | null" : ""}`
+
             if (url.names.find(el => { return el == param.field })) {
                 params = params.replace(`${param.field}: string`, temp)
                 return;
@@ -166,9 +168,9 @@ export class TsBuilder extends Generater {
         this.apiDatas.forEach((el, i: number) => {
             code += this.generateFun(el);
         });
-        //code += "\n}"
-
-        return this.template.replace("/**replace*/", code)
+        let data = this.buildData();
+        this.template = this.template.replace("/**data*/", data)
+        return this.template.replace("/**fun*/", code)
     }
 
     buildData() {
@@ -176,8 +178,6 @@ export class TsBuilder extends Generater {
         this.tsDatas.forEach((el, i: number) => {
             code += el.toString();
         });
-        //code += "\n}"
-
         return code
     }
 

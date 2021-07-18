@@ -115,9 +115,6 @@ import java.io.File
     return s;
   }
 
-
-  
-
   /**
    * 获取返回类型
    * 根据类型获取
@@ -250,9 +247,7 @@ import ${packageName}.data.*
     this.dataClasses.forEach(el => {
       dataCode += el.toString()
     })
-
     return dataCode;
-
   }
 
 }
