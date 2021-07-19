@@ -1,32 +1,33 @@
 {
   "name": "apidoc-codegen",
-  "version": "0.0.1",
+  "version": "0.0.2",
   "description": "Using apidoc to generate typescript or kotlin code",
-  "main": "index.ts",
+  "main": "dist/index.js",
   "scripts": {
-    "build": "tsc --declaration && ",
-    "tsapi": "ts-node ./bin/cli.ts -t ts -s D:/project/node/botserver/apidoc/api_data.json -d D:/project/node/oxox2/src/js",
-    "ktapi": "ts-node ./bin/cli.ts  -t kotlin -s D:/project/node/botserver/apidoc/api_data.json -d D:/project/android/OxCore/oxapi/src/main/java/ltd/oxox/oxapi -p ltd.oxox.oxapi"
+    "build": "tsc --declaration",
+    "tsapi": "ts-node ./src/bin/cli.ts -t ts -s D:/project/node/botserver/apidoc/api_data.json -d D:/project/node/oxox2/src/js",
+    "ktapi": "ts-node ./src/bin/cli.ts  -t kotlin -s D:/project/node/botserver/apidoc/api_data.json -d D:/project/android/OxCore/oxapi/src/main/java/ltd/oxox/oxapi -p ltd.oxox.oxapi"
   },
   "files": [
-    "lib/**/*"
+    "dist/**/*",
+    "template/**/*"
   ],
   "bin": {
-    "apibuilder": "bin/cli.js"
+    "apidoc-codegen": "/dist/bin/cli.js"
   },
   "keywords": [
-    "apicodegen"
+    "apidoc,codegen"
   ],
   "author": "",
   "license": "ISC",
   "devDependencies": {
     "@types/node": "^16.0.0",
     "@types/qs": "^6.9.7",
-    "@types/yargs": "^17.0.2"
+    "@types/yargs": "^17.0.2",
+    "axios": "^0.21.1",
+    "qs": "^6.10.1"
   },
   "dependencies": {
-    "axios": "^0.21.1",
-    "qs": "^6.10.1",
     "yargs": "^17.0.1"
   }
 }

@@ -1,58 +1,72 @@
 import axios from "axios"
 import qs from "qs"
- 
+
 /**data*/
 
-export class Api {
-    private static api:Api
-    vue:any
-    constructor(){
-        
-    }
-    get headers(){
-        if(this.vue){
-            return {"oxoxauth":this.vue.$cookies.get("logincode")};
-        }else{
-            return null
+let instance = axios.create();
+
+instance.interceptors.request.use(
+    config => {
+        const token = sessionStorage.getItem('token')
+        if (token) { // 判断是否存在token，如果存在的话，则每个http header都加上token
+            config.headers.oxoxauth = token  //请求头加上token
         }
+        return config
+    },
+    err => {
+        return Promise.reject(err)
+    });
+
+// instance.interceptors.response.use(
+//     res => {
+//      return res.data.data
+//   },
+//   err=>{
+//     return Promise.reject(err)
+//   }
+// );
+
+export class Api {
+    private static api: Api
+    constructor() {
+
+    }
+    static getApi() {
+        if (!Api.api) {
+            Api.api = new Api()
+        }
+        return Api.api;
     }
 
-    static getApi(){
-        if(!Api.api){
-            Api.api=new Api()
-            }
-            return Api.api;
-    }
-        
     getBaseUrl() {
         return "http://" + window.location.hostname + ":3001"
     }
-        
+
     getApidoc() {
         return this.getBaseUrl() + "/apidoc/index.html"
     }
-        
+
 
     get(url: string, postData: any) {
-        return axios.get(url + "?" +qs.stringify(postData),{ headers:this.headers }).then(s => {
+        return instance.get(url + "?" + qs.stringify(postData)).then(s => {
             return s.data
         });
     }
 
 
     post(url: string, postData: any) {
-        return axios.post(url, qs.stringify(postData), { headers:this.headers }).then(s => {
+        return instance.post(url, qs.stringify(postData)).then(s => {
             return s.data
         });
     }
-        
+
     put(url: string, postData: any) {
-        return axios.put(url, qs.stringify(postData),{ headers:this.headers }).then(s => {
+        return instance.put(url, qs.stringify(postData)).then(s => {
             return s.data
         });
     }
     delete(url: string, postData: any) {
-        return axios.delete(url + "?" + qs.stringify(postData),{ headers:this.headers }).then(s => {
+        return instance.delete(url + "?" + qs.stringify(postData)).then(s => {
             return s.data
         });
     }
