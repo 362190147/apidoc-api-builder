@@ -38,17 +38,18 @@ export class Api {
         return Api.api;
     }
 
-    getBaseUrl() {
+    get baseUrl() {
         return "http://" + window.location.hostname + ":3001"
     }
 
     getApidoc() {
-        return this.getBaseUrl() + "/apidoc/index.html"
+        return this.baseUrl + "/apidoc/index.html"
     }
 
 
-    get(url: string, postData: any) {
-        return instance.get(url + "?" + qs.stringify(postData)).then(s => {
+    get(url: string, postData?: any) {
+        let data = postData ? "?" + qs.stringify(postData) : ""
+        return instance.get(url + data).then(s => {
             return s.data
         });
     }
@@ -65,8 +66,9 @@ export class Api {
             return s.data
         });
     }
-    delete(url: string, postData: any) {
-        return instance.delete(url + "?" + qs.stringify(postData)).then(s => {
+    delete(url: string, postData?: any) {
+        let data = postData ? "?" + qs.stringify(postData) : ""
+        return instance.delete(url + data ).then(s => {
             return s.data
         });
     }

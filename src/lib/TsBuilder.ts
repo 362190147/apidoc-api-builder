@@ -117,14 +117,15 @@ export class TsBuilder extends Generater {
 
     generateFun(apiData: ApiData) {
         let code = ""
-        let params = ""
         let postData = ""
+        let params = ""
+        let urlPath = ""
         let url = TsBuilder.getUrlData(apiData.url)
         let parameter = this.getFields(apiData.parameter?.fields);
         //console.log(url);
         url.names.forEach((name: string, i: number) => {
-            if (params) params += `, `
-            params += `${name}: string`
+            if (urlPath) urlPath += `, `
+            urlPath += `${name}: string`
             //console.log(name);
         });
 
@@ -136,29 +137,36 @@ export class TsBuilder extends Generater {
                 if(num == 0){
                     num=1;
                     let name=this.firstToLower(param.group);
-                    if (params) params += `, `;
-                    params += `${name}:${param.group}`
-                    postData=`\n    postData=${name}`
+                    if (postData) postData += `, `;
+                    postData += `${name}:${param.group}`
                 }
                 return;
             }
             let tstype = this.toTsType(param.type)
-            let temp = `${field}: ${tstype}${param.optional ? " | null" : ""}`
+            let temp = `${field}${param.optional ? "?" : ""}: ${tstype}`
 
             if (url.names.find(el => { return el == param.field })) {
-                params = params.replace(`${param.field}: string`, temp)
+                postData = postData.replace(`${param.field}: string`, temp)
                 return;
             }
-            if (params) params += `, `
-            params += temp;
-            postData += `\n    postData.${param.field} = ${field};`
+            if (postData){
+                postData += `, `
+            }
+            postData += temp;
         });
 
+        params = urlPath;
+        if(urlPath && postData){
+            params +=   ","
+        }
+        if(postData){
+            params += `postData:{${postData}}`
+        }
+     
         let name = this.underlineToHump(apiData.name);
         code += `
   ${name}(${params}) {
-    let postData: any = {};${postData}
-    return this.${apiData.type}(this.getBaseUrl() + \`${url.url}\`, postData);
+    return this.${apiData.type}(this.baseUrl + \`${url.url}\` ${postData ? ", postData" : " "});
 }`;
         return code;
     }
