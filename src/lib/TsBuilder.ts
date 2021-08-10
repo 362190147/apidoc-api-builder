@@ -20,7 +20,7 @@ class TsData {
     toString() {
         let memberStr = ""
         this.members.forEach(el => {
-            console.debug(el);
+            //console.debug(el);
             memberStr += `${el.name}: ${el.type}| undefined\n`
         })
         return `export class ${this.name}{
@@ -101,7 +101,7 @@ export class TsBuilder extends Generater {
                 num++;
                 return;
             }
-            console.error(param.group)
+            //console.log(param.group)
             let tsData = this.tsDatas.find(el => { return el.name == param.group })
             if (!tsData) {
                 tsData = new TsData(param.group)
@@ -160,13 +160,13 @@ export class TsBuilder extends Generater {
             params +=   ","
         }
         if(postData){
-            params += `postData:{${postData}}`
+            params += `data:{${postData}}`
         }
      
         let name = this.underlineToHump(apiData.name);
         code += `
   ${name}(${params}) {
-    return this.${apiData.type}(this.baseUrl + \`${url.url}\` ${postData ? ", postData" : " "});
+    return this.${apiData.type}(this.baseUrl + \`${url.url}\` ${postData ? ", data" : ""});
 }`;
         return code;
     }
