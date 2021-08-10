@@ -5,7 +5,6 @@ import { TsBuilder } from "../lib/TsBuilder";
 import fs from "fs"
 import { KotlinBuilder } from '../lib/KotlinBuilder';
 import path from 'path';
-
 interface Arguments {
     [x: string]: unknown;
     a: boolean;
@@ -32,16 +31,13 @@ let parser = yargs(hideBin(process.argv)).options({
     const argv = await parser.argv;
 
     if (!argv.d) {
-        console.error("miss argv d")
-        return;
+        return console.error("miss argv d");
     }
     if (!argv.s) {
-        console.error("miss argv s")
-        return;
+        return console.error("miss argv s");
     }
     if (!argv.t) {
-        console.error("miss argv t")
-        return;
+        return console.error("miss argv t");
     }
     let api_data = fs.readFileSync(argv.s).toString()
     let dist_path = argv.d
@@ -59,7 +55,7 @@ let parser = yargs(hideBin(process.argv)).options({
         fs.writeFileSync(path.join(dist_path , "/Api.kt"), apiCode)
     } else if (argv.type == "ts") {
         let tsBuilder = new TsBuilder(api_data)
-        let template = fs.readFileSync(path.join(__dirname, "../../template/tshead.ts")).toString();
+        let template = fs.readFileSync(path.join(__dirname, "../../template/ts.txt")).toString();
         tsBuilder.template = template;
         //console.log(template)
         let code = tsBuilder.build();

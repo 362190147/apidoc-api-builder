@@ -132,7 +132,7 @@ export class TsBuilder extends Generater {
         let num = this.generateDataclass( parameter,url);
        
         parameter?.forEach((param: Field, i: number) => {
-            let field = this.underlineToHump(param.field)
+            //let field = this.underlineToHump(param.field)
             if (param.group != "Parameter") {
                 if(num == 0){
                     num=1;
@@ -143,7 +143,7 @@ export class TsBuilder extends Generater {
                 return;
             }
             let tstype = this.toTsType(param.type)
-            let temp = `${field}${param.optional ? "?" : ""}: ${tstype}`
+            let temp = `${param.field}${param.optional ? "?" : ""}: ${tstype}`
 
             if (url.names.find(el => { return el == param.field })) {
                 postData = postData.replace(`${param.field}: string`, temp)
