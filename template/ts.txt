@@ -10,24 +10,22 @@ export class Api {
         this.axios = axiosInstance
     }
 
-    get baseUrl() {
-        return "http://" + window.location.hostname + ":3001"
-    }
-
+    public baseUrl = ""
+    
     get(url: string, data?: any) {
-        return this.axios.get(url +  (data ? "?" + qs.stringify(data) : "") ).then(s => { return s.data});
+        return this.axios.get(url +  (data ? "?" + qs.stringify(data) : "") )
     }
 
     post(url: string, data: any) {
-        return this.axios.post(url, qs.stringify(data)).then(s => { return s.data });
+        return this.axios.post(url, qs.stringify(data))
     }
 
     put(url: string, data: any) {
-        return this.axios.put(url, qs.stringify(data)).then(s => { return s.data });
+        return this.axios.put(url, qs.stringify(data))
     }
 
     delete(url: string, data?: any) {
-        return this.axios.delete(url +  (data ? "?" + qs.stringify(data) : "") ).then(s => { return s.data});
+        return this.axios.delete(url +  (data ? "?" + qs.stringify(data) : "") )
     }
     /**fun*/
 }

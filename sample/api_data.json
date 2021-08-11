@@ -1,0 +1,3644 @@
+[
+  {
+    "type": "post",
+    "url": "/account/check_code",
+    "title": "验证码验证",
+    "description": "<p>验证输入的验证码是否正确</p>",
+    "name": "checkCode",
+    "group": "Account",
+    "parameter": {
+      "fields": {
+        "Parameter": [
+          {
+            "group": "Parameter",
+            "type": "string",
+            "optional": false,
+            "field": "account",
+            "description": "<p>账号</p>"
+          },
+          {
+            "group": "Parameter",
+            "type": "string",
+            "optional": false,
+            "field": "code",
+            "description": "<p>验证码</p>"
+          }
+        ]
+      }
+    },
+    "sampleRequest": [
+      {
+        "url": "/account/check_code"
+      }
+    ],
+    "version": "1.0.0",
+    "filename": "src/routes/account.ts",
+    "groupTitle": "Account",
+    "header": {
+      "fields": {
+        "Header": [
+          {
+            "group": "Header",
+            "type": "String",
+            "optional": false,
+            "field": "oxoxauth",
+            "description": "<p>授权，通过登录获取，虽然每个api都有，但是仅是需要授权的api才需要</p>"
+          }
+        ]
+      }
+    },
+    "success": {
+      "fields": {
+        "Success 200": [
+          {
+            "group": "Success 200",
+            "type": "number",
+            "optional": false,
+            "field": "code",
+            "description": "<p>0成功 其他为错误</p>"
+          },
+          {
+            "group": "Success 200",
+            "type": "number",
+            "optional": false,
+            "field": "msg",
+            "description": "<p>成功或失败的信息</p>"
+          }
+        ]
+      }
+    }
+  },
+  {
+    "type": "get",
+    "url": "/account/my",
+    "title": "获取登陆信息",
+    "description": "<p>获取登陆信息</p>",
+    "name": "getUserInfo",
+    "group": "Account",
+    "sampleRequest": [
+      {
+        "url": "/account/my"
+      }
+    ],
+    "version": "1.0.0",
+    "filename": "src/routes/account.ts",
+    "groupTitle": "Account",
+    "header": {
+      "fields": {
+        "Header": [
+          {
+            "group": "Header",
+            "type": "String",
+            "optional": false,
+            "field": "oxoxauth",
+            "description": "<p>授权，通过登录获取，虽然每个api都有，但是仅是需要授权的api才需要</p>"
+          }
+        ]
+      }
+    },
+    "success": {
+      "fields": {
+        "Success 200": [
+          {
+            "group": "Success 200",
+            "type": "number",
+            "optional": false,
+            "field": "code",
+            "description": "<p>0成功 其他为错误</p>"
+          },
+          {
+            "group": "Success 200",
+            "type": "number",
+            "optional": false,
+            "field": "msg",
+            "description": "<p>成功或失败的信息</p>"
+          },
+          {
+            "group": "Success 200",
+            "type": "UserInfo",
+            "optional": false,
+            "field": "data",
+            "description": "<p>用户信息</p>"
+          },
+          {
+            "group": "Success 200",
+            "type": "string",
+            "optional": false,
+            "field": "data.id",
+            "description": "<p>用户id</p>"
+          },
+          {
+            "group": "Success 200",
+            "type": "string",
+            "optional": false,
+            "field": "data.user_name",
+            "description": "<p>用户名</p>"
+          },
+          {
+            "group": "Success 200",
+            "type": "string",
+            "optional": false,
+            "field": "data.account",
+            "description": "<p>账号</p>"
+          },
+          {
+            "group": "Success 200",
+            "type": "string",
+            "optional": false,
+            "field": "data.priv",
+            "description": "<p>权限</p>"
+          },
+          {
+            "group": "Success 200",
+            "type": "string",
+            "optional": false,
+            "field": "data.head_path",
+            "description": "<p>头像地址</p>"
+          },
+          {
+            "group": "Success 200",
+            "type": "string",
+            "optional": false,
+            "field": "data.mail",
+            "description": "<p>邮箱地址</p>"
+          }
+        ]
+      }
+    }
+  },
+  {
+    "type": "post",
+    "url": "/account/login",
+    "title": "登录",
+    "description": "<p>登录</p>",
+    "name": "login",
+    "group": "Account",
+    "parameter": {
+      "fields": {
+        "Parameter": [
+          {
+            "group": "Parameter",
+            "type": "string",
+            "optional": false,
+            "field": "account",
+            "description": "<p>账号</p>"
+          },
+          {
+            "group": "Parameter",
+            "type": "string",
+            "optional": false,
+            "field": "password",
+            "description": "<p>密码</p>"
+          }
+        ]
+      }
+    },
+    "success": {
+      "fields": {
+        "Success 200": [
+          {
+            "group": "Success 200",
+            "type": "number",
+            "optional": false,
+            "field": "code",
+            "description": "<p>0正常 其他都是错误</p>"
+          },
+          {
+            "group": "Success 200",
+            "type": "UserData",
+            "optional": false,
+            "field": "data",
+            "description": "<p>数据</p>"
+          },
+          {
+            "group": "Success 200",
+            "type": "number",
+            "optional": false,
+            "field": "data.id",
+            "description": "<p>用户id</p>"
+          },
+          {
+            "group": "Success 200",
+            "type": "string",
+            "optional": false,
+            "field": "data.logincode",
+            "description": "<p>登陆码用于验证登录</p>"
+          }
+        ]
+      },
+      "examples": [
+        {
+          "title": "Success-Response:",
+          "content": "{\n    \"code\" : 0,\n    \"msg\"  : \"\",\n    \"data\" :{\n        \"name\" : \"loginName\",\n        \"logincode\" : \"logincodemd5\"\n    }\n}",
+          "type": "json"
+        }
+      ]
+    },
+    "sampleRequest": [
+      {
+        "url": "/account/login"
+      }
+    ],
+    "version": "1.0.0",
+    "filename": "src/routes/account.ts",
+    "groupTitle": "Account"
+  },
+  {
+    "type": "put",
+    "url": "/account/my",
+    "title": "修改个人信息",
+    "description": "<p>修改自己的个人信息</p>",
+    "name": "putUserInfo",
+    "group": "Account",
+    "parameter": {
+      "fields": {
+        "Parameter": [
+          {
+            "group": "Parameter",
+            "type": "string",
+            "optional": false,
+            "field": "mail",
+            "description": "<p>邮箱</p>"
+          },
+          {
+            "group": "Parameter",
+            "type": "string",
+            "optional": false,
+            "field": "head_path",
+            "description": "<p>头像地址</p>"
+          },
+          {
+            "group": "Parameter",
+            "type": "string",
+            "optional": false,
+            "field": "language",
+            "description": "<p>语言</p>"
+          }
+        ]
+      }
+    },
+    "sampleRequest": [
+      {
+        "url": "/account/my"
+      }
+    ],
+    "version": "1.0.0",
+    "filename": "src/routes/account.ts",
+    "groupTitle": "Account",
+    "header": {
+      "fields": {
+        "Header": [
+          {
+            "group": "Header",
+            "type": "String",
+            "optional": false,
+            "field": "oxoxauth",
+            "description": "<p>授权，通过登录获取，虽然每个api都有，但是仅是需要授权的api才需要</p>"
+          }
+        ]
+      }
+    },
+    "success": {
+      "fields": {
+        "Success 200": [
+          {
+            "group": "Success 200",
+            "type": "number",
+            "optional": false,
+            "field": "code",
+            "description": "<p>0成功 其他为错误</p>"
+          },
+          {
+            "group": "Success 200",
+            "type": "number",
+            "optional": false,
+            "field": "msg",
+            "description": "<p>成功或失败的信息</p>"
+          },
+          {
+            "group": "Success 200",
+            "type": "UserInfo",
+            "optional": false,
+            "field": "data",
+            "description": "<p>用户信息</p>"
+          },
+          {
+            "group": "Success 200",
+            "type": "string",
+            "optional": false,
+            "field": "data.id",
+            "description": "<p>用户id</p>"
+          },
+          {
+            "group": "Success 200",
+            "type": "string",
+            "optional": false,
+            "field": "data.user_name",
+            "description": "<p>用户名</p>"
+          },
+          {
+            "group": "Success 200",
+            "type": "string",
+            "optional": false,
+            "field": "data.account",
+            "description": "<p>账号</p>"
+          },
+          {
+            "group": "Success 200",
+            "type": "string",
+            "optional": false,
+            "field": "data.priv",
+            "description": "<p>权限</p>"
+          },
+          {
+            "group": "Success 200",
+            "type": "string",
+            "optional": false,
+            "field": "data.head_path",
+            "description": "<p>头像地址</p>"
+          },
+          {
+            "group": "Success 200",
+            "type": "string",
+            "optional": false,
+            "field": "data.mail",
+            "description": "<p>邮箱地址</p>"
+          }
+        ]
+      }
+    }
+  },
+  {
+    "type": "post",
+    "url": "/account/register",
+    "title": "注册",
+    "description": "<p>注册</p>",
+    "name": "register",
+    "group": "Account",
+    "parameter": {
+      "fields": {
+        "Parameter": [
+          {
+            "group": "Parameter",
+            "type": "string",
+            "optional": false,
+            "field": "account",
+            "description": "<p>账号</p>"
+          },
+          {
+            "group": "Parameter",
+            "type": "string",
+            "optional": false,
+            "field": "password",
+            "description": "<p>密码</p>"
+          },
+          {
+            "group": "Parameter",
+            "type": "string",
+            "optional": false,
+            "field": "user_name",
+            "description": "<p>用户名</p>"
+          },
+          {
+            "group": "Parameter",
+            "type": "string",
+            "optional": false,
+            "field": "true_name",
+            "description": "<p>姓名</p>"
+          },
+          {
+            "group": "Parameter",
+            "type": "string",
+            "optional": false,
+            "field": "code",
+            "description": "<p>验证码</p>"
+          }
+        ]
+      }
+    },
+    "sampleRequest": [
+      {
+        "url": "/account/register"
+      }
+    ],
+    "version": "1.0.0",
+    "filename": "src/routes/account.ts",
+    "groupTitle": "Account",
+    "header": {
+      "fields": {
+        "Header": [
+          {
+            "group": "Header",
+            "type": "String",
+            "optional": false,
+            "field": "oxoxauth",
+            "description": "<p>授权，通过登录获取，虽然每个api都有，但是仅是需要授权的api才需要</p>"
+          }
+        ]
+      }
+    },
+    "success": {
+      "fields": {
+        "Success 200": [
+          {
+            "group": "Success 200",
+            "type": "number",
+            "optional": false,
+            "field": "code",
+            "description": "<p>0成功 其他为错误</p>"
+          },
+          {
+            "group": "Success 200",
+            "type": "number",
+            "optional": false,
+            "field": "msg",
+            "description": "<p>成功或失败的信息</p>"
+          }
+        ]
+      }
+    }
+  },
+  {
+    "type": "put",
+    "url": "/account/reset_password",
+    "title": "重置密码",
+    "description": "<p>获取登陆信息</p>",
+    "name": "resetPassword",
+    "group": "Account",
+    "parameter": {
+      "fields": {
+        "Parameter": [
+          {
+            "group": "Parameter",
+            "type": "string",
+            "optional": false,
+            "field": "mail",
+            "description": "<p>重置码通过邮箱获得，一个小时失效</p>"
+          },
+          {
+            "group": "Parameter",
+            "type": "string",
+            "optional": false,
+            "field": "time",
+            "description": "<p>过期时间</p>"
+          },
+          {
+            "group": "Parameter",
+            "type": "string",
+            "optional": false,
+            "field": "sign",
+            "description": "<p>签名</p>"
+          },
+          {
+            "group": "Parameter",
+            "type": "string",
+            "optional": false,
+            "field": "password",
+            "description": "<p>新密码</p>"
+          }
+        ]
+      }
+    },
+    "sampleRequest": [
+      {
+        "url": "/account/reset_password"
+      }
+    ],
+    "version": "1.0.0",
+    "filename": "src/routes/account.ts",
+    "groupTitle": "Account",
+    "header": {
+      "fields": {
+        "Header": [
+          {
+            "group": "Header",
+            "type": "String",
+            "optional": false,
+            "field": "oxoxauth",
+            "description": "<p>授权，通过登录获取，虽然每个api都有，但是仅是需要授权的api才需要</p>"
+          }
+        ]
+      }
+    },
+    "success": {
+      "fields": {
+        "Success 200": [
+          {
+            "group": "Success 200",
+            "type": "number",
+            "optional": false,
+            "field": "code",
+            "description": "<p>0成功 其他为错误</p>"
+          },
+          {
+            "group": "Success 200",
+            "type": "number",
+            "optional": false,
+            "field": "msg",
+            "description": "<p>成功或失败的信息</p>"
+          }
+        ]
+      }
+    }
+  },
+  {
+    "type": "post",
+    "url": "/account/reset_password_by_mail",
+    "title": "重置密码发到邮箱",
+    "description": "<p>发送重置密码url到邮箱，url半小时失效</p>",
+    "name": "resetPasswordByMail",
+    "group": "Account",
+    "parameter": {
+      "fields": {
+        "Parameter": [
+          {
+            "group": "Parameter",
+            "type": "string",
+            "optional": false,
+            "field": "mail",
+            "description": ""
+          },
+          {
+            "group": "Parameter",
+            "type": "string",
+            "optional": false,
+            "field": "reset_code",
+            "description": "<p>新密码</p>"
+          }
+        ]
+      }
+    },
+    "version": "1.0.0",
+    "filename": "src/routes/account.ts",
+    "groupTitle": "Account",
+    "header": {
+      "fields": {
+        "Header": [
+          {
+            "group": "Header",
+            "type": "String",
+            "optional": false,
+            "field": "oxoxauth",
+            "description": "<p>授权，通过登录获取，虽然每个api都有，但是仅是需要授权的api才需要</p>"
+          }
+        ]
+      }
+    },
+    "success": {
+      "fields": {
+        "Success 200": [
+          {
+            "group": "Success 200",
+            "type": "number",
+            "optional": false,
+            "field": "code",
+            "description": "<p>0成功 其他为错误</p>"
+          },
+          {
+            "group": "Success 200",
+            "type": "number",
+            "optional": false,
+            "field": "msg",
+            "description": "<p>成功或失败的信息</p>"
+          }
+        ]
+      }
+    }
+  },
+  {
+    "type": "post",
+    "url": "/account/send_verify_code",
+    "title": "验证码",
+    "description": "<p>发送验证码</p>",
+    "name": "sendVerifyCode",
+    "group": "Account",
+    "parameter": {
+      "fields": {
+        "Parameter": [
+          {
+            "group": "Parameter",
+            "type": "string",
+            "optional": false,
+            "field": "account",
+            "description": "<p>账号</p>"
+          }
+        ]
+      }
+    },
+    "sampleRequest": [
+      {
+        "url": "/account/send_verify_code"
+      }
+    ],
+    "version": "1.0.0",
+    "filename": "src/routes/account.ts",
+    "groupTitle": "Account",
+    "header": {
+      "fields": {
+        "Header": [
+          {
+            "group": "Header",
+            "type": "String",
+            "optional": false,
+            "field": "oxoxauth",
+            "description": "<p>授权，通过登录获取，虽然每个api都有，但是仅是需要授权的api才需要</p>"
+          }
+        ]
+      }
+    },
+    "success": {
+      "fields": {
+        "Success 200": [
+          {
+            "group": "Success 200",
+            "type": "number",
+            "optional": false,
+            "field": "code",
+            "description": "<p>0成功 其他为错误</p>"
+          },
+          {
+            "group": "Success 200",
+            "type": "number",
+            "optional": false,
+            "field": "msg",
+            "description": "<p>成功或失败的信息</p>"
+          }
+        ]
+      }
+    }
+  },
+  {
+    "type": "delete",
+    "url": "/admin/privileges/:id",
+    "title": "权限删除",
+    "description": "<p>删除权限</p>",
+    "name": "deletePrivileges",
+    "group": "Admin",
+    "parameter": {
+      "fields": {
+        "Parameter": [
+          {
+            "group": "Parameter",
+            "type": "number",
+            "optional": false,
+            "field": "id",
+            "description": "<p>要删除用户的id</p>"
+          }
+        ]
+      }
+    },
+    "version": "1.0.0",
+    "filename": "src/routes/admin/privileges.ts",
+    "groupTitle": "Admin",
+    "header": {
+      "fields": {
+        "Header": [
+          {
+            "group": "Header",
+            "type": "String",
+            "optional": false,
+            "field": "oxoxauth",
+            "description": "<p>授权，通过登录获取，虽然每个api都有，但是仅是需要授权的api才需要</p>"
+          }
+        ]
+      }
+    },
+    "success": {
+      "fields": {
+        "Success 200": [
+          {
+            "group": "Success 200",
+            "type": "number",
+            "optional": false,
+            "field": "code",
+            "description": "<p>0成功 其他为错误</p>"
+          },
+          {
+            "group": "Success 200",
+            "type": "number",
+            "optional": false,
+            "field": "msg",
+            "description": "<p>成功或失败的信息</p>"
+          }
+        ]
+      }
+    }
+  },
+  {
+    "type": "delete",
+    "url": "/admin/roles/:id",
+    "title": "角色删除",
+    "description": "<p>删除角色</p>",
+    "name": "deleteRoles",
+    "group": "Admin",
+    "version": "1.0.0",
+    "filename": "src/routes/admin/admin.ts",
+    "groupTitle": "Admin",
+    "header": {
+      "fields": {
+        "Header": [
+          {
+            "group": "Header",
+            "type": "String",
+            "optional": false,
+            "field": "oxoxauth",
+            "description": "<p>授权，通过登录获取，虽然每个api都有，但是仅是需要授权的api才需要</p>"
+          }
+        ]
+      }
+    },
+    "success": {
+      "fields": {
+        "Success 200": [
+          {
+            "group": "Success 200",
+            "type": "number",
+            "optional": false,
+            "field": "code",
+            "description": "<p>0成功 其他为错误</p>"
+          },
+          {
+            "group": "Success 200",
+            "type": "number",
+            "optional": false,
+            "field": "msg",
+            "description": "<p>成功或失败的信息</p>"
+          }
+        ]
+      }
+    }
+  },
+  {
+    "type": "get",
+    "url": "/admin/privileges",
+    "title": "权限全部获取",
+    "description": "<p>权限全部获取</p>",
+    "name": "getPrivilege",
+    "group": "Admin",
+    "version": "1.0.0",
+    "filename": "src/routes/admin/privileges.ts",
+    "groupTitle": "Admin",
+    "header": {
+      "fields": {
+        "Header": [
+          {
+            "group": "Header",
+            "type": "String",
+            "optional": false,
+            "field": "oxoxauth",
+            "description": "<p>授权，通过登录获取，虽然每个api都有，但是仅是需要授权的api才需要</p>"
+          }
+        ]
+      }
+    },
+    "success": {
+      "fields": {
+        "Success 200": [
+          {
+            "group": "Success 200",
+            "type": "number",
+            "optional": false,
+            "field": "code",
+            "description": "<p>0成功 其他为错误</p>"
+          },
+          {
+            "group": "Success 200",
+            "type": "number",
+            "optional": false,
+            "field": "msg",
+            "description": "<p>成功或失败的信息</p>"
+          }
+        ]
+      }
+    }
+  },
+  {
+    "type": "get",
+    "url": "/admin/roles/:id",
+    "title": "获取角色",
+    "description": "<p>删除指定id用户</p>",
+    "name": "getRole",
+    "group": "Admin",
+    "version": "1.0.0",
+    "filename": "src/routes/admin/admin.ts",
+    "groupTitle": "Admin",
+    "header": {
+      "fields": {
+        "Header": [
+          {
+            "group": "Header",
+            "type": "String",
+            "optional": false,
+            "field": "oxoxauth",
+            "description": "<p>授权，通过登录获取，虽然每个api都有，但是仅是需要授权的api才需要</p>"
+          }
+        ]
+      }
+    },
+    "success": {
+      "fields": {
+        "Success 200": [
+          {
+            "group": "Success 200",
+            "type": "number",
+            "optional": false,
+            "field": "code",
+            "description": "<p>0成功 其他为错误</p>"
+          },
+          {
+            "group": "Success 200",
+            "type": "number",
+            "optional": false,
+            "field": "msg",
+            "description": "<p>成功或失败的信息</p>"
+          }
+        ]
+      }
+    }
+  },
+  {
+    "type": "get",
+    "url": "/admin/roles",
+    "title": "获取所有角色",
+    "description": "<p>获取所有角色</p>",
+    "name": "getRoles",
+    "group": "Admin",
+    "version": "1.0.0",
+    "filename": "src/routes/admin/admin.ts",
+    "groupTitle": "Admin",
+    "header": {
+      "fields": {
+        "Header": [
+          {
+            "group": "Header",
+            "type": "String",
+            "optional": false,
+            "field": "oxoxauth",
+            "description": "<p>授权，通过登录获取，虽然每个api都有，但是仅是需要授权的api才需要</p>"
+          }
+        ]
+      }
+    },
+    "success": {
+      "fields": {
+        "Success 200": [
+          {
+            "group": "Success 200",
+            "type": "number",
+            "optional": false,
+            "field": "code",
+            "description": "<p>0成功 其他为错误</p>"
+          },
+          {
+            "group": "Success 200",
+            "type": "number",
+            "optional": false,
+            "field": "msg",
+            "description": "<p>成功或失败的信息</p>"
+          }
+        ]
+      }
+    }
+  },
+  {
+    "type": "post",
+    "url": "/admin/privileges",
+    "title": "权限新建",
+    "description": "<p>新建权限</p>",
+    "name": "postPrivilege",
+    "group": "Admin",
+    "parameter": {
+      "fields": {
+        "Parameter": [
+          {
+            "group": "Parameter",
+            "type": "String",
+            "optional": false,
+            "field": "name",
+            "description": "<p>新建权限名</p>"
+          }
+        ]
+      }
+    },
+    "version": "1.0.0",
+    "filename": "src/routes/admin/privileges.ts",
+    "groupTitle": "Admin",
+    "header": {
+      "fields": {
+        "Header": [
+          {
+            "group": "Header",
+            "type": "String",
+            "optional": false,
+            "field": "oxoxauth",
+            "description": "<p>授权，通过登录获取，虽然每个api都有，但是仅是需要授权的api才需要</p>"
+          }
+        ]
+      }
+    },
+    "success": {
+      "fields": {
+        "Success 200": [
+          {
+            "group": "Success 200",
+            "type": "number",
+            "optional": false,
+            "field": "code",
+            "description": "<p>0成功 其他为错误</p>"
+          },
+          {
+            "group": "Success 200",
+            "type": "number",
+            "optional": false,
+            "field": "msg",
+            "description": "<p>成功或失败的信息</p>"
+          }
+        ]
+      }
+    }
+  },
+  {
+    "type": "post",
+    "url": "/admin/roles",
+    "title": "角色新建",
+    "description": "<p>新建角色</p>",
+    "name": "postRole",
+    "group": "Admin",
+    "parameter": {
+      "fields": {
+        "Parameter": [
+          {
+            "group": "Parameter",
+            "type": "String",
+            "optional": false,
+            "field": "name",
+            "description": "<p>角色名</p>"
+          }
+        ]
+      }
+    },
+    "version": "1.0.0",
+    "filename": "src/routes/admin/admin.ts",
+    "groupTitle": "Admin",
+    "header": {
+      "fields": {
+        "Header": [
+          {
+            "group": "Header",
+            "type": "String",
+            "optional": false,
+            "field": "oxoxauth",
+            "description": "<p>授权，通过登录获取，虽然每个api都有，但是仅是需要授权的api才需要</p>"
+          }
+        ]
+      }
+    },
+    "success": {
+      "fields": {
+        "Success 200": [
+          {
+            "group": "Success 200",
+            "type": "number",
+            "optional": false,
+            "field": "code",
+            "description": "<p>0成功 其他为错误</p>"
+          },
+          {
+            "group": "Success 200",
+            "type": "number",
+            "optional": false,
+            "field": "msg",
+            "description": "<p>成功或失败的信息</p>"
+          }
+        ]
+      }
+    }
+  },
+  {
+    "type": "put",
+    "url": "/admin/privileges/:id",
+    "title": "权限修改",
+    "description": "<p>修改权限</p>",
+    "name": "putPrivileges",
+    "group": "Admin",
+    "parameter": {
+      "fields": {
+        "Parameter": [
+          {
+            "group": "Parameter",
+            "type": "String",
+            "optional": true,
+            "field": "name",
+            "description": "<p>权限名</p>"
+          },
+          {
+            "group": "Parameter",
+            "type": "number",
+            "optional": false,
+            "field": "id",
+            "description": "<p>id</p>"
+          }
+        ]
+      }
+    },
+    "version": "1.0.0",
+    "filename": "src/routes/admin/privileges.ts",
+    "groupTitle": "Admin",
+    "header": {
+      "fields": {
+        "Header": [
+          {
+            "group": "Header",
+            "type": "String",
+            "optional": false,
+            "field": "oxoxauth",
+            "description": "<p>授权，通过登录获取，虽然每个api都有，但是仅是需要授权的api才需要</p>"
+          }
+        ]
+      }
+    },
+    "success": {
+      "fields": {
+        "Success 200": [
+          {
+            "group": "Success 200",
+            "type": "number",
+            "optional": false,
+            "field": "code",
+            "description": "<p>0成功 其他为错误</p>"
+          },
+          {
+            "group": "Success 200",
+            "type": "number",
+            "optional": false,
+            "field": "msg",
+            "description": "<p>成功或失败的信息</p>"
+          }
+        ]
+      }
+    }
+  },
+  {
+    "type": "put",
+    "url": "/admin/roles",
+    "title": "角色修改",
+    "description": "<p>修改角色的名字或者权限</p>",
+    "name": "putRoles",
+    "group": "Admin",
+    "parameter": {
+      "fields": {
+        "Parameter": [
+          {
+            "group": "Parameter",
+            "type": "String",
+            "optional": true,
+            "field": "name",
+            "description": "<p>角色名</p>"
+          },
+          {
+            "group": "Parameter",
+            "type": "number[]",
+            "optional": true,
+            "field": "privs",
+            "description": "<p>权限id数组</p>"
+          }
+        ]
+      }
+    },
+    "version": "1.0.0",
+    "filename": "src/routes/admin/admin.ts",
+    "groupTitle": "Admin",
+    "header": {
+      "fields": {
+        "Header": [
+          {
+            "group": "Header",
+            "type": "String",
+            "optional": false,
+            "field": "oxoxauth",
+            "description": "<p>授权，通过登录获取，虽然每个api都有，但是仅是需要授权的api才需要</p>"
+          }
+        ]
+      }
+    },
+    "success": {
+      "fields": {
+        "Success 200": [
+          {
+            "group": "Success 200",
+            "type": "number",
+            "optional": false,
+            "field": "code",
+            "description": "<p>0成功 其他为错误</p>"
+          },
+          {
+            "group": "Success 200",
+            "type": "number",
+            "optional": false,
+            "field": "msg",
+            "description": "<p>成功或失败的信息</p>"
+          }
+        ]
+      }
+    }
+  },
+  {
+    "type": "delete",
+    "url": "/articles/:id",
+    "title": "删除文章",
+    "description": "<p>上传文章</p>",
+    "name": "delete_article",
+    "group": "Article",
+    "parameter": {
+      "fields": {
+        "Parameter": [
+          {
+            "group": "Parameter",
+            "type": "number",
+            "optional": false,
+            "field": "id",
+            "description": "<p>文章id</p>"
+          }
+        ]
+      }
+    },
+    "version": "1.0.0",
+    "filename": "src/routes/articles.ts",
+    "groupTitle": "Article",
+    "header": {
+      "fields": {
+        "Header": [
+          {
+            "group": "Header",
+            "type": "String",
+            "optional": false,
+            "field": "oxoxauth",
+            "description": "<p>授权，通过登录获取，虽然每个api都有，但是仅是需要授权的api才需要</p>"
+          }
+        ]
+      }
+    },
+    "success": {
+      "fields": {
+        "Success 200": [
+          {
+            "group": "Success 200",
+            "type": "number",
+            "optional": false,
+            "field": "code",
+            "description": "<p>0成功 其他为错误</p>"
+          },
+          {
+            "group": "Success 200",
+            "type": "number",
+            "optional": false,
+            "field": "msg",
+            "description": "<p>成功或失败的信息</p>"
+          }
+        ]
+      }
+    }
+  },
+  {
+    "type": "get",
+    "url": "/articles/:id",
+    "title": "获取文章",
+    "description": "<p>上传文章</p>",
+    "name": "getArticle",
+    "group": "Article",
+    "parameter": {
+      "fields": {
+        "Parameter": [
+          {
+            "group": "Parameter",
+            "type": "number",
+            "optional": false,
+            "field": "id",
+            "description": ""
+          }
+        ]
+      }
+    },
+    "success": {
+      "fields": {
+        "Success 200": [
+          {
+            "group": "Success 200",
+            "type": "Object",
+            "optional": false,
+            "field": "data",
+            "description": ""
+          }
+        ]
+      }
+    },
+    "version": "1.0.0",
+    "filename": "src/routes/articles.ts",
+    "groupTitle": "Article"
+  },
+  {
+    "type": "get",
+    "url": "/articles/",
+    "title": "获得所有文章",
+    "description": "<p>获得所有文章</p>",
+    "name": "getArticles",
+    "group": "Article",
+    "parameter": {
+      "fields": {
+        "Parameter": [
+          {
+            "group": "Parameter",
+            "type": "string",
+            "optional": true,
+            "field": "title",
+            "description": "<p>title</p>"
+          },
+          {
+            "group": "Parameter",
+            "type": "string",
+            "optional": true,
+            "field": "content",
+            "description": "<p>content</p>"
+          },
+          {
+            "group": "Parameter",
+            "type": "string",
+            "optional": false,
+            "field": "tags",
+            "description": "<p>tags</p>"
+          }
+        ]
+      }
+    },
+    "success": {
+      "fields": {
+        "Success 200": [
+          {
+            "group": "Success 200",
+            "type": "Object",
+            "optional": false,
+            "field": "data",
+            "description": ""
+          },
+          {
+            "group": "Success 200",
+            "type": "number",
+            "optional": false,
+            "field": "code",
+            "description": "<p>0成功 其他为错误</p>"
+          },
+          {
+            "group": "Success 200",
+            "type": "number",
+            "optional": false,
+            "field": "msg",
+            "description": "<p>成功或失败的信息</p>"
+          }
+        ]
+      }
+    },
+    "version": "1.0.0",
+    "filename": "src/routes/articles.ts",
+    "groupTitle": "Article",
+    "header": {
+      "fields": {
+        "Header": [
+          {
+            "group": "Header",
+            "type": "String",
+            "optional": false,
+            "field": "oxoxauth",
+            "description": "<p>授权，通过登录获取，虽然每个api都有，但是仅是需要授权的api才需要</p>"
+          }
+        ]
+      }
+    }
+  },
+  {
+    "type": "put",
+    "url": "/articles/",
+    "title": "修改文章",
+    "description": "<p>修改文章</p>",
+    "name": "putArticle",
+    "group": "Article",
+    "parameter": {
+      "fields": {
+        "Parameter": [
+          {
+            "group": "Parameter",
+            "type": "number",
+            "optional": false,
+            "field": "id",
+            "description": "<p>id</p>"
+          },
+          {
+            "group": "Parameter",
+            "type": "string",
+            "optional": false,
+            "field": "title",
+            "description": "<p>title</p>"
+          },
+          {
+            "group": "Parameter",
+            "type": "string",
+            "optional": false,
+            "field": "content",
+            "description": "<p>content</p>"
+          },
+          {
+            "group": "Parameter",
+            "type": "string",
+            "optional": false,
+            "field": "tags",
+            "description": "<p>tags</p>"
+          }
+        ]
+      }
+    },
+    "success": {
+      "fields": {
+        "Success 200": [
+          {
+            "group": "Success 200",
+            "type": "Object",
+            "optional": false,
+            "field": "data",
+            "description": ""
+          }
+        ]
+      }
+    },
+    "version": "1.0.0",
+    "filename": "src/routes/articles.ts",
+    "groupTitle": "Article"
+  },
+  {
+    "type": "post",
+    "url": "/articles/",
+    "title": "上传文章",
+    "description": "<p>上传文章</p>",
+    "name": "upload_article",
+    "group": "Article",
+    "parameter": {
+      "fields": {
+        "Parameter": [
+          {
+            "group": "Parameter",
+            "type": "string",
+            "optional": false,
+            "field": "title",
+            "description": "<p>title</p>"
+          },
+          {
+            "group": "Parameter",
+            "type": "string",
+            "optional": false,
+            "field": "content",
+            "description": "<p>content</p>"
+          },
+          {
+            "group": "Parameter",
+            "type": "string",
+            "optional": false,
+            "field": "tags",
+            "description": "<p>tags</p>"
+          }
+        ]
+      }
+    },
+    "success": {
+      "fields": {
+        "Success 200": [
+          {
+            "group": "Success 200",
+            "type": "Object",
+            "optional": false,
+            "field": "data",
+            "description": ""
+          }
+        ]
+      }
+    },
+    "version": "1.0.0",
+    "filename": "src/routes/articles.ts",
+    "groupTitle": "Article"
+  },
+  {
+    "type": "get",
+    "url": "/bot/help/:type",
+    "title": "帮助",
+    "description": "<p>获取</p>",
+    "name": "botHelp",
+    "group": "Bot",
+    "success": {
+      "examples": [
+        {
+          "title": "Success-Response:",
+          "content": "{\n    \"code\" : \"0\",\n}",
+          "type": "json"
+        }
+      ],
+      "fields": {
+        "Success 200": [
+          {
+            "group": "Success 200",
+            "type": "number",
+            "optional": false,
+            "field": "code",
+            "description": "<p>0成功 其他为错误</p>"
+          },
+          {
+            "group": "Success 200",
+            "type": "number",
+            "optional": false,
+            "field": "msg",
+            "description": "<p>成功或失败的信息</p>"
+          }
+        ]
+      }
+    },
+    "sampleRequest": [
+      {
+        "url": "/bot/help/test"
+      }
+    ],
+    "version": "1.0.0",
+    "filename": "src/routes/bot.ts",
+    "groupTitle": "Bot",
+    "header": {
+      "fields": {
+        "Header": [
+          {
+            "group": "Header",
+            "type": "String",
+            "optional": false,
+            "field": "oxoxauth",
+            "description": "<p>授权，通过登录获取，虽然每个api都有，但是仅是需要授权的api才需要</p>"
+          }
+        ]
+      }
+    }
+  },
+  {
+    "type": "get",
+    "url": "/bot/bots/:id",
+    "title": "获取机器人信息",
+    "description": "<p>获取机器人信息</p>",
+    "name": "getBot",
+    "group": "Bot",
+    "parameter": {
+      "fields": {
+        "Parameter": [
+          {
+            "group": "Parameter",
+            "type": "number",
+            "optional": false,
+            "field": "id",
+            "description": "<p>机器人id(必须)</p>"
+          }
+        ]
+      }
+    },
+    "sampleRequest": [
+      {
+        "url": "/bot"
+      }
+    ],
+    "version": "1.0.0",
+    "filename": "src/routes/bot.ts",
+    "groupTitle": "Bot",
+    "header": {
+      "fields": {
+        "Header": [
+          {
+            "group": "Header",
+            "type": "String",
+            "optional": false,
+            "field": "oxoxauth",
+            "description": "<p>授权，通过登录获取，虽然每个api都有，但是仅是需要授权的api才需要</p>"
+          }
+        ]
+      }
+    },
+    "success": {
+      "fields": {
+        "Success 200": [
+          {
+            "group": "Success 200",
+            "type": "number",
+            "optional": false,
+            "field": "code",
+            "description": "<p>0成功 其他为错误</p>"
+          },
+          {
+            "group": "Success 200",
+            "type": "number",
+            "optional": false,
+            "field": "msg",
+            "description": "<p>成功或失败的信息</p>"
+          }
+        ]
+      }
+    }
+  },
+  {
+    "type": "get",
+    "url": "/bot/bots",
+    "title": "获取所有机器人信息",
+    "description": "<p>获取所有群</p>",
+    "name": "getBotList",
+    "group": "Bot",
+    "success": {
+      "fields": {
+        "Success 200": [
+          {
+            "group": "Success 200",
+            "type": "number",
+            "optional": false,
+            "field": "code",
+            "description": ""
+          }
+        ]
+      },
+      "examples": [
+        {
+          "title": "Success-Response:",
+          "content": "{\n    \"code\" : \"0\",\n}",
+          "type": "json"
+        }
+      ]
+    },
+    "sampleRequest": [
+      {
+        "url": "/bot/bot/getlist"
+      }
+    ],
+    "version": "1.0.0",
+    "filename": "src/routes/bot.ts",
+    "groupTitle": "Bot"
+  },
+  {
+    "type": "get",
+    "url": "/bot/groups/:id",
+    "title": "通过id获得群",
+    "description": "<p>通过id获得群</p>",
+    "name": "getGroup",
+    "group": "Bot",
+    "parameter": {
+      "fields": {
+        "Parameter": [
+          {
+            "group": "Parameter",
+            "type": "number",
+            "optional": false,
+            "field": "id",
+            "description": "<p>机器人id(必须)</p>"
+          }
+        ]
+      }
+    },
+    "sampleRequest": [
+      {
+        "url": "/bot/group/get"
+      }
+    ],
+    "version": "1.0.0",
+    "filename": "src/routes/bot.ts",
+    "groupTitle": "Bot",
+    "header": {
+      "fields": {
+        "Header": [
+          {
+            "group": "Header",
+            "type": "String",
+            "optional": false,
+            "field": "oxoxauth",
+            "description": "<p>授权，通过登录获取，虽然每个api都有，但是仅是需要授权的api才需要</p>"
+          }
+        ]
+      }
+    },
+    "success": {
+      "fields": {
+        "Success 200": [
+          {
+            "group": "Success 200",
+            "type": "number",
+            "optional": false,
+            "field": "code",
+            "description": "<p>0成功 其他为错误</p>"
+          },
+          {
+            "group": "Success 200",
+            "type": "number",
+            "optional": false,
+            "field": "msg",
+            "description": "<p>成功或失败的信息</p>"
+          }
+        ]
+      }
+    }
+  },
+  {
+    "type": "get",
+    "url": "/bot/groups",
+    "title": "获取群列表",
+    "description": "<p>获取所有群</p>",
+    "name": "getGroupList",
+    "group": "Bot",
+    "parameter": {
+      "fields": {
+        "Parameter": [
+          {
+            "group": "Parameter",
+            "type": "number",
+            "optional": false,
+            "field": "id",
+            "description": "<p>机器人id(必须)</p>"
+          }
+        ]
+      }
+    },
+    "success": {
+      "fields": {
+        "Success 200": [
+          {
+            "group": "Success 200",
+            "type": "number",
+            "optional": false,
+            "field": "code",
+            "description": ""
+          }
+        ]
+      },
+      "examples": [
+        {
+          "title": "Success-Response:",
+          "content": "{\n    \"code\" : \"0\",\n}",
+          "type": "json"
+        }
+      ]
+    },
+    "sampleRequest": [
+      {
+        "url": "/bot/group/getlist"
+      }
+    ],
+    "version": "1.0.0",
+    "filename": "src/routes/bot.ts",
+    "groupTitle": "Bot"
+  },
+  {
+    "type": "put",
+    "url": "/bot/bots/:id/head_url",
+    "title": "设置机器人头像",
+    "description": "<p>设置机器人头像</p>",
+    "name": "setBotHead",
+    "group": "Bot",
+    "parameter": {
+      "fields": {
+        "Parameter": [
+          {
+            "group": "Parameter",
+            "type": "number",
+            "optional": false,
+            "field": "id",
+            "description": "<p>机器人id(必须)</p>"
+          },
+          {
+            "group": "Parameter",
+            "type": "string",
+            "optional": false,
+            "field": "imgurl",
+            "description": "<p>图片地址(必须)</p>"
+          }
+        ]
+      }
+    },
+    "success": {
+      "examples": [
+        {
+          "title": "Success-Response:",
+          "content": "{\n    \"code\" : \"0\",\n    \"msg\" : \"成功\"\n}",
+          "type": "json"
+        }
+      ],
+      "fields": {
+        "Success 200": [
+          {
+            "group": "Success 200",
+            "type": "number",
+            "optional": false,
+            "field": "code",
+            "description": "<p>0成功 其他为错误</p>"
+          },
+          {
+            "group": "Success 200",
+            "type": "number",
+            "optional": false,
+            "field": "msg",
+            "description": "<p>成功或失败的信息</p>"
+          }
+        ]
+      }
+    },
+    "sampleRequest": [
+      {
+        "url": "/bot/head/set"
+      }
+    ],
+    "version": "1.0.0",
+    "filename": "src/routes/bot.ts",
+    "groupTitle": "Bot",
+    "header": {
+      "fields": {
+        "Header": [
+          {
+            "group": "Header",
+            "type": "String",
+            "optional": false,
+            "field": "oxoxauth",
+            "description": "<p>授权，通过登录获取，虽然每个api都有，但是仅是需要授权的api才需要</p>"
+          }
+        ]
+      }
+    }
+  },
+  {
+    "type": "get",
+    "url": "/debug",
+    "title": "测试",
+    "description": "<p>获取</p>",
+    "name": "debug",
+    "group": "Debug",
+    "success": {
+      "fields": {
+        "Success 200": [
+          {
+            "group": "Success 200",
+            "type": "number",
+            "optional": false,
+            "field": "code",
+            "description": ""
+          }
+        ]
+      },
+      "examples": [
+        {
+          "title": "Success-Response:",
+          "content": "{\n    \"code\" : \"0\",\n}",
+          "type": "json"
+        }
+      ]
+    },
+    "sampleRequest": [
+      {
+        "url": "/debug"
+      }
+    ],
+    "version": "1.0.0",
+    "filename": "src/routes/debug.ts",
+    "groupTitle": "Debug"
+  },
+  {
+    "type": "put",
+    "url": "/debug",
+    "title": "测试",
+    "description": "<p>获取</p>",
+    "name": "debugput",
+    "group": "Debug",
+    "parameter": {
+      "fields": {
+        "Parameter": [
+          {
+            "group": "Parameter",
+            "type": "string",
+            "optional": false,
+            "field": "test",
+            "description": ""
+          }
+        ]
+      }
+    },
+    "success": {
+      "fields": {
+        "Success 200": [
+          {
+            "group": "Success 200",
+            "type": "number",
+            "optional": false,
+            "field": "code",
+            "description": ""
+          }
+        ]
+      },
+      "examples": [
+        {
+          "title": "Success-Response:",
+          "content": "{\n    \"code\" : \"0\",\n}",
+          "type": "json"
+        }
+      ]
+    },
+    "sampleRequest": [
+      {
+        "url": "/debug"
+      }
+    ],
+    "version": "1.0.0",
+    "filename": "src/routes/debug.ts",
+    "groupTitle": "Debug"
+  },
+  {
+    "type": "delete",
+    "url": "/exams/:id",
+    "title": "删除题库",
+    "description": "<p>删除题库</p>",
+    "name": "deleteExam",
+    "group": "Exam",
+    "parameter": {
+      "fields": {
+        "Parameter": [
+          {
+            "group": "Parameter",
+            "type": "number",
+            "optional": false,
+            "field": "id",
+            "description": "<p>题库id</p>"
+          }
+        ]
+      }
+    },
+    "sampleRequest": [
+      {
+        "url": "/exams/1"
+      }
+    ],
+    "version": "1.0.0",
+    "filename": "src/routes/exam/exams.ts",
+    "groupTitle": "Exam",
+    "success": {
+      "fields": {
+        "Success 200": [
+          {
+            "group": "Success 200",
+            "type": "Exam[]",
+            "optional": false,
+            "field": "data",
+            "description": ""
+          },
+          {
+            "group": "Success 200",
+            "type": "number",
+            "optional": false,
+            "field": "data.id",
+            "description": ""
+          },
+          {
+            "group": "Success 200",
+            "type": "string",
+            "optional": false,
+            "field": "data.name",
+            "description": ""
+          }
+        ]
+      }
+    }
+  },
+  {
+    "type": "get",
+    "url": "/exams/:id",
+    "title": "获取试卷题目",
+    "description": "<p>获取试卷题目</p>",
+    "name": "getExam",
+    "group": "Exam",
+    "parameter": {
+      "fields": {
+        "Parameter": [
+          {
+            "group": "Parameter",
+            "type": "number",
+            "optional": false,
+            "field": "id",
+            "description": "<p>id</p>"
+          }
+        ]
+      }
+    },
+    "sampleRequest": [
+      {
+        "url": "/exams"
+      }
+    ],
+    "version": "1.0.0",
+    "filename": "src/routes/exam/exams.ts",
+    "groupTitle": "Exam",
+    "success": {
+      "fields": {
+        "Success 200": [
+          {
+            "group": "Success 200",
+            "type": "Exam[]",
+            "optional": false,
+            "field": "data",
+            "description": ""
+          },
+          {
+            "group": "Success 200",
+            "type": "number",
+            "optional": false,
+            "field": "data.id",
+            "description": ""
+          },
+          {
+            "group": "Success 200",
+            "type": "string",
+            "optional": false,
+            "field": "data.name",
+            "description": ""
+          }
+        ]
+      }
+    }
+  },
+  {
+    "type": "get",
+    "url": "/exams",
+    "title": "获取试卷名列表",
+    "description": "<p>获取试卷名</p>",
+    "name": "getExams",
+    "group": "Exam",
+    "sampleRequest": [
+      {
+        "url": "/exams"
+      }
+    ],
+    "version": "1.0.0",
+    "filename": "src/routes/exam/exams.ts",
+    "groupTitle": "Exam",
+    "success": {
+      "fields": {
+        "Success 200": [
+          {
+            "group": "Success 200",
+            "type": "Exam[]",
+            "optional": false,
+            "field": "data",
+            "description": ""
+          },
+          {
+            "group": "Success 200",
+            "type": "number",
+            "optional": false,
+            "field": "data.id",
+            "description": ""
+          },
+          {
+            "group": "Success 200",
+            "type": "string",
+            "optional": false,
+            "field": "data.name",
+            "description": ""
+          }
+        ]
+      }
+    }
+  },
+  {
+    "type": "post",
+    "url": "/exams",
+    "title": "新建题库",
+    "description": "<p>获取日语高考题</p>",
+    "name": "postExam",
+    "group": "Exam",
+    "parameter": {
+      "fields": {
+        "Parameter": [
+          {
+            "group": "Parameter",
+            "type": "string",
+            "optional": false,
+            "field": "name",
+            "description": "<p>试卷名</p>"
+          }
+        ]
+      }
+    },
+    "version": "1.0.0",
+    "filename": "src/routes/exam/exams.ts",
+    "groupTitle": "Exam",
+    "success": {
+      "fields": {
+        "Success 200": [
+          {
+            "group": "Success 200",
+            "type": "Exam[]",
+            "optional": false,
+            "field": "data",
+            "description": ""
+          },
+          {
+            "group": "Success 200",
+            "type": "number",
+            "optional": false,
+            "field": "data.id",
+            "description": ""
+          },
+          {
+            "group": "Success 200",
+            "type": "string",
+            "optional": false,
+            "field": "data.name",
+            "description": ""
+          }
+        ]
+      }
+    }
+  },
+  {
+    "type": "put",
+    "url": "/exams/:id",
+    "title": "修改题库",
+    "description": "<p>修改题库</p>",
+    "name": "putExam",
+    "group": "Exam",
+    "parameter": {
+      "fields": {
+        "Parameter": [
+          {
+            "group": "Parameter",
+            "type": "string",
+            "optional": false,
+            "field": "id",
+            "description": "<p>id</p>"
+          },
+          {
+            "group": "Parameter",
+            "type": "string",
+            "optional": true,
+            "field": "name",
+            "description": "<p>试卷名</p>"
+          }
+        ]
+      }
+    },
+    "version": "1.0.0",
+    "filename": "src/routes/exam/exams.ts",
+    "groupTitle": "Exam",
+    "success": {
+      "fields": {
+        "Success 200": [
+          {
+            "group": "Success 200",
+            "type": "Exam[]",
+            "optional": false,
+            "field": "data",
+            "description": ""
+          },
+          {
+            "group": "Success 200",
+            "type": "number",
+            "optional": false,
+            "field": "data.id",
+            "description": ""
+          },
+          {
+            "group": "Success 200",
+            "type": "string",
+            "optional": false,
+            "field": "data.name",
+            "description": ""
+          }
+        ]
+      }
+    }
+  },
+  {
+    "type": "post",
+    "url": "/install/cheak_update",
+    "title": "检测安卓更新",
+    "description": "<p>检测安卓软件更新信息</p>",
+    "name": "cheak_update",
+    "group": "Install",
+    "parameter": {
+      "fields": {
+        "Parameter": [
+          {
+            "group": "Parameter",
+            "type": "string",
+            "optional": false,
+            "field": "name",
+            "description": "<p>更新的软件名称</p>"
+          }
+        ]
+      }
+    },
+    "success": {
+      "fields": {
+        "Success 200": [
+          {
+            "group": "Success 200",
+            "type": "VersionInfo",
+            "optional": false,
+            "field": "data",
+            "description": "<p>最新版本信息</p>"
+          },
+          {
+            "group": "Success 200",
+            "type": "boolean",
+            "optional": false,
+            "field": "data.force",
+            "description": "<p>是否强制升级</p>"
+          },
+          {
+            "group": "Success 200",
+            "type": "string",
+            "optional": false,
+            "field": "data.version",
+            "description": "<p>版本</p>"
+          },
+          {
+            "group": "Success 200",
+            "type": "number",
+            "optional": false,
+            "field": "data.version_num",
+            "description": "<p>版本号</p>"
+          },
+          {
+            "group": "Success 200",
+            "type": "string",
+            "optional": false,
+            "field": "data.url",
+            "description": "<p>下载地址</p>"
+          },
+          {
+            "group": "Success 200",
+            "type": "number",
+            "optional": false,
+            "field": "code",
+            "description": "<p>0成功 其他为错误</p>"
+          },
+          {
+            "group": "Success 200",
+            "type": "number",
+            "optional": false,
+            "field": "msg",
+            "description": "<p>成功或失败的信息</p>"
+          }
+        ]
+      }
+    },
+    "version": "1.0.0",
+    "filename": "src/routes/install.ts",
+    "groupTitle": "Install",
+    "header": {
+      "fields": {
+        "Header": [
+          {
+            "group": "Header",
+            "type": "String",
+            "optional": false,
+            "field": "oxoxauth",
+            "description": "<p>授权，通过登录获取，虽然每个api都有，但是仅是需要授权的api才需要</p>"
+          }
+        ]
+      }
+    }
+  },
+  {
+    "type": "post",
+    "url": "/questions/",
+    "title": "批量上传题目",
+    "description": "<p>批量上传题目</p>",
+    "name": "allUploadQuesiton",
+    "group": "Question",
+    "parameter": {
+      "fields": {
+        "Parameter": [
+          {
+            "group": "Parameter",
+            "type": "Question[]",
+            "optional": false,
+            "field": "questions",
+            "description": "<p>题目数组</p>"
+          }
+        ],
+        "Question": [
+          {
+            "group": "Question",
+            "type": "string",
+            "optional": false,
+            "field": "name",
+            "description": "<p>试卷名</p>"
+          },
+          {
+            "group": "Question",
+            "type": "number",
+            "optional": false,
+            "field": "examId",
+            "description": "<p>试卷id</p>"
+          },
+          {
+            "group": "Question",
+            "type": "number",
+            "optional": false,
+            "field": "num",
+            "description": "<p>题号 如果为空获得所有题目</p>"
+          },
+          {
+            "group": "Question",
+            "type": "string",
+            "optional": false,
+            "field": "question",
+            "description": "<p>问题</p>"
+          },
+          {
+            "group": "Question",
+            "type": "string",
+            "optional": false,
+            "field": "a",
+            "description": "<p>选项a</p>"
+          },
+          {
+            "group": "Question",
+            "type": "string",
+            "optional": false,
+            "field": "b",
+            "description": "<p>选项a</p>"
+          },
+          {
+            "group": "Question",
+            "type": "string",
+            "optional": false,
+            "field": "c",
+            "description": "<p>选项a</p>"
+          },
+          {
+            "group": "Question",
+            "type": "string",
+            "optional": false,
+            "field": "d",
+            "description": "<p>选项a</p>"
+          },
+          {
+            "group": "Question",
+            "type": "string",
+            "optional": false,
+            "field": "answer",
+            "description": "<p>答案</p>"
+          },
+          {
+            "group": "Question",
+            "type": "string",
+            "optional": false,
+            "field": "answer_key",
+            "description": "<p>答案解析</p>"
+          }
+        ]
+      }
+    },
+    "sampleRequest": [
+      {
+        "url": "/question/upload"
+      }
+    ],
+    "version": "1.0.0",
+    "filename": "src/routes/exam/questions.ts",
+    "groupTitle": "Question"
+  },
+  {
+    "type": "delete",
+    "url": "/questions/:id",
+    "title": "删除题目",
+    "description": "<p>删除题目</p>",
+    "name": "deleteQuestion",
+    "group": "Question",
+    "parameter": {
+      "fields": {
+        "Parameter": [
+          {
+            "group": "Parameter",
+            "type": "number",
+            "optional": false,
+            "field": "id",
+            "description": "<p>题目id</p>"
+          }
+        ]
+      }
+    },
+    "success": {
+      "fields": {
+        "Success 200": [
+          {
+            "group": "Success 200",
+            "type": "Object",
+            "optional": false,
+            "field": "data",
+            "description": ""
+          }
+        ]
+      },
+      "examples": [
+        {
+          "title": "Success-Response:",
+          "content": "{\n    \"code\" : \"0\",\n}",
+          "type": "json"
+        }
+      ]
+    },
+    "sampleRequest": [
+      {
+        "url": "/questions/1"
+      }
+    ],
+    "version": "1.0.0",
+    "filename": "src/routes/exam/questions.ts",
+    "groupTitle": "Question"
+  },
+  {
+    "type": "get",
+    "url": "/questions",
+    "title": "获取题目",
+    "description": "<p>获取日语高考题</p>",
+    "name": "getQuestions",
+    "group": "Question",
+    "parameter": {
+      "fields": {
+        "Parameter": [
+          {
+            "group": "Parameter",
+            "type": "number",
+            "optional": false,
+            "field": "examId",
+            "description": "<p>试卷名</p>"
+          },
+          {
+            "group": "Parameter",
+            "type": "number",
+            "optional": false,
+            "field": "num",
+            "description": "<p>题号 如果为空获得所有题目</p>"
+          }
+        ]
+      }
+    },
+    "version": "1.0.0",
+    "filename": "src/routes/exam/questions.ts",
+    "groupTitle": "Question",
+    "header": {
+      "fields": {
+        "Header": [
+          {
+            "group": "Header",
+            "type": "String",
+            "optional": false,
+            "field": "oxoxauth",
+            "description": "<p>授权，通过登录获取，虽然每个api都有，但是仅是需要授权的api才需要</p>"
+          }
+        ]
+      }
+    },
+    "success": {
+      "fields": {
+        "Success 200": [
+          {
+            "group": "Success 200",
+            "type": "number",
+            "optional": false,
+            "field": "code",
+            "description": "<p>0成功 其他为错误</p>"
+          },
+          {
+            "group": "Success 200",
+            "type": "number",
+            "optional": false,
+            "field": "msg",
+            "description": "<p>成功或失败的信息</p>"
+          },
+          {
+            "group": "Success 200",
+            "type": "Question[]",
+            "optional": false,
+            "field": "data",
+            "description": ""
+          },
+          {
+            "group": "Success 200",
+            "type": "string",
+            "optional": false,
+            "field": "data.name",
+            "description": "<p>试卷名</p>"
+          },
+          {
+            "group": "Success 200",
+            "type": "number",
+            "optional": false,
+            "field": "data.num",
+            "description": "<p>题号</p>"
+          },
+          {
+            "group": "Success 200",
+            "type": "string",
+            "optional": false,
+            "field": "data.question",
+            "description": "<p>问题</p>"
+          },
+          {
+            "group": "Success 200",
+            "type": "string",
+            "optional": false,
+            "field": "data.a",
+            "description": "<p>选项a</p>"
+          },
+          {
+            "group": "Success 200",
+            "type": "string",
+            "optional": false,
+            "field": "data.b",
+            "description": "<p>选项a</p>"
+          },
+          {
+            "group": "Success 200",
+            "type": "string",
+            "optional": false,
+            "field": "data.c",
+            "description": "<p>选项a</p>"
+          },
+          {
+            "group": "Success 200",
+            "type": "string",
+            "optional": false,
+            "field": "data.d",
+            "description": "<p>选项a</p>"
+          },
+          {
+            "group": "Success 200",
+            "type": "string",
+            "optional": false,
+            "field": "data.answer",
+            "description": "<p>答案</p>"
+          },
+          {
+            "group": "Success 200",
+            "type": "string",
+            "optional": false,
+            "field": "data.answer_key",
+            "description": "<p>答案解析</p>"
+          }
+        ]
+      }
+    }
+  },
+  {
+    "type": "post",
+    "url": "/questions",
+    "title": "上传题目",
+    "description": "<p>上传一道题目</p>",
+    "name": "postQuestion",
+    "group": "Question",
+    "success": {
+      "examples": [
+        {
+          "title": "Success-Response:",
+          "content": "{\n    \"code\" : \"0\",\n}",
+          "type": "json"
+        }
+      ],
+      "fields": {
+        "Success 200": [
+          {
+            "group": "Success 200",
+            "type": "Question[]",
+            "optional": false,
+            "field": "data",
+            "description": ""
+          },
+          {
+            "group": "Success 200",
+            "type": "string",
+            "optional": false,
+            "field": "data.name",
+            "description": "<p>试卷名</p>"
+          },
+          {
+            "group": "Success 200",
+            "type": "number",
+            "optional": false,
+            "field": "data.num",
+            "description": "<p>题号</p>"
+          },
+          {
+            "group": "Success 200",
+            "type": "string",
+            "optional": false,
+            "field": "data.question",
+            "description": "<p>问题</p>"
+          },
+          {
+            "group": "Success 200",
+            "type": "string",
+            "optional": false,
+            "field": "data.a",
+            "description": "<p>选项a</p>"
+          },
+          {
+            "group": "Success 200",
+            "type": "string",
+            "optional": false,
+            "field": "data.b",
+            "description": "<p>选项a</p>"
+          },
+          {
+            "group": "Success 200",
+            "type": "string",
+            "optional": false,
+            "field": "data.c",
+            "description": "<p>选项a</p>"
+          },
+          {
+            "group": "Success 200",
+            "type": "string",
+            "optional": false,
+            "field": "data.d",
+            "description": "<p>选项a</p>"
+          },
+          {
+            "group": "Success 200",
+            "type": "string",
+            "optional": false,
+            "field": "data.answer",
+            "description": "<p>答案</p>"
+          },
+          {
+            "group": "Success 200",
+            "type": "string",
+            "optional": false,
+            "field": "data.answer_key",
+            "description": "<p>答案解析</p>"
+          }
+        ]
+      }
+    },
+    "sampleRequest": [
+      {
+        "url": "/questions/"
+      }
+    ],
+    "version": "1.0.0",
+    "filename": "src/routes/exam/questions.ts",
+    "groupTitle": "Question",
+    "parameter": {
+      "fields": {
+        "Question": [
+          {
+            "group": "Question",
+            "type": "string",
+            "optional": false,
+            "field": "name",
+            "description": "<p>试卷名</p>"
+          },
+          {
+            "group": "Question",
+            "type": "number",
+            "optional": false,
+            "field": "examId",
+            "description": "<p>试卷id</p>"
+          },
+          {
+            "group": "Question",
+            "type": "number",
+            "optional": false,
+            "field": "num",
+            "description": "<p>题号 如果为空获得所有题目</p>"
+          },
+          {
+            "group": "Question",
+            "type": "string",
+            "optional": false,
+            "field": "question",
+            "description": "<p>问题</p>"
+          },
+          {
+            "group": "Question",
+            "type": "string",
+            "optional": false,
+            "field": "a",
+            "description": "<p>选项a</p>"
+          },
+          {
+            "group": "Question",
+            "type": "string",
+            "optional": false,
+            "field": "b",
+            "description": "<p>选项a</p>"
+          },
+          {
+            "group": "Question",
+            "type": "string",
+            "optional": false,
+            "field": "c",
+            "description": "<p>选项a</p>"
+          },
+          {
+            "group": "Question",
+            "type": "string",
+            "optional": false,
+            "field": "d",
+            "description": "<p>选项a</p>"
+          },
+          {
+            "group": "Question",
+            "type": "string",
+            "optional": false,
+            "field": "answer",
+            "description": "<p>答案</p>"
+          },
+          {
+            "group": "Question",
+            "type": "string",
+            "optional": false,
+            "field": "answer_key",
+            "description": "<p>答案解析</p>"
+          }
+        ]
+      }
+    }
+  },
+  {
+    "type": "put",
+    "url": "/questions/:id",
+    "title": "修改题目",
+    "description": "<p>修改疫苗</p>",
+    "name": "putQuestion",
+    "group": "Question",
+    "parameter": {
+      "fields": {
+        "Parameter": [
+          {
+            "group": "Parameter",
+            "type": "number",
+            "optional": false,
+            "field": "id",
+            "description": "<p>id</p>"
+          }
+        ],
+        "Question": [
+          {
+            "group": "Question",
+            "type": "string",
+            "optional": false,
+            "field": "name",
+            "description": "<p>试卷名</p>"
+          },
+          {
+            "group": "Question",
+            "type": "number",
+            "optional": false,
+            "field": "examId",
+            "description": "<p>试卷id</p>"
+          },
+          {
+            "group": "Question",
+            "type": "number",
+            "optional": false,
+            "field": "num",
+            "description": "<p>题号 如果为空获得所有题目</p>"
+          },
+          {
+            "group": "Question",
+            "type": "string",
+            "optional": false,
+            "field": "question",
+            "description": "<p>问题</p>"
+          },
+          {
+            "group": "Question",
+            "type": "string",
+            "optional": false,
+            "field": "a",
+            "description": "<p>选项a</p>"
+          },
+          {
+            "group": "Question",
+            "type": "string",
+            "optional": false,
+            "field": "b",
+            "description": "<p>选项a</p>"
+          },
+          {
+            "group": "Question",
+            "type": "string",
+            "optional": false,
+            "field": "c",
+            "description": "<p>选项a</p>"
+          },
+          {
+            "group": "Question",
+            "type": "string",
+            "optional": false,
+            "field": "d",
+            "description": "<p>选项a</p>"
+          },
+          {
+            "group": "Question",
+            "type": "string",
+            "optional": false,
+            "field": "answer",
+            "description": "<p>答案</p>"
+          },
+          {
+            "group": "Question",
+            "type": "string",
+            "optional": false,
+            "field": "answer_key",
+            "description": "<p>答案解析</p>"
+          }
+        ]
+      }
+    },
+    "success": {
+      "examples": [
+        {
+          "title": "Success-Response:",
+          "content": "{\n    \"code\" : \"0\",\n}",
+          "type": "json"
+        }
+      ],
+      "fields": {
+        "Success 200": [
+          {
+            "group": "Success 200",
+            "type": "Question[]",
+            "optional": false,
+            "field": "data",
+            "description": ""
+          },
+          {
+            "group": "Success 200",
+            "type": "string",
+            "optional": false,
+            "field": "data.name",
+            "description": "<p>试卷名</p>"
+          },
+          {
+            "group": "Success 200",
+            "type": "number",
+            "optional": false,
+            "field": "data.num",
+            "description": "<p>题号</p>"
+          },
+          {
+            "group": "Success 200",
+            "type": "string",
+            "optional": false,
+            "field": "data.question",
+            "description": "<p>问题</p>"
+          },
+          {
+            "group": "Success 200",
+            "type": "string",
+            "optional": false,
+            "field": "data.a",
+            "description": "<p>选项a</p>"
+          },
+          {
+            "group": "Success 200",
+            "type": "string",
+            "optional": false,
+            "field": "data.b",
+            "description": "<p>选项a</p>"
+          },
+          {
+            "group": "Success 200",
+            "type": "string",
+            "optional": false,
+            "field": "data.c",
+            "description": "<p>选项a</p>"
+          },
+          {
+            "group": "Success 200",
+            "type": "string",
+            "optional": false,
+            "field": "data.d",
+            "description": "<p>选项a</p>"
+          },
+          {
+            "group": "Success 200",
+            "type": "string",
+            "optional": false,
+            "field": "data.answer",
+            "description": "<p>答案</p>"
+          },
+          {
+            "group": "Success 200",
+            "type": "string",
+            "optional": false,
+            "field": "data.answer_key",
+            "description": "<p>答案解析</p>"
+          }
+        ]
+      }
+    },
+    "sampleRequest": [
+      {
+        "url": "/questions/"
+      }
+    ],
+    "version": "1.0.0",
+    "filename": "src/routes/exam/questions.ts",
+    "groupTitle": "Question"
+  },
+  {
+    "type": "get",
+    "url": "/token/qiniu/head",
+    "title": "获得上传七牛token",
+    "description": "<p>获得上传七牛token</p>",
+    "name": "upload_token_head",
+    "group": "Token",
+    "parameter": {
+      "fields": {
+        "Parameter": [
+          {
+            "group": "Parameter",
+            "type": "string",
+            "optional": false,
+            "field": "filename",
+            "description": ""
+          }
+        ]
+      }
+    },
+    "success": {
+      "fields": {
+        "Success 200": [
+          {
+            "group": "Success 200",
+            "type": "QuniuToken",
+            "optional": false,
+            "field": "data",
+            "description": "<p>数据</p>"
+          },
+          {
+            "group": "Success 200",
+            "type": "string",
+            "optional": false,
+            "field": "data.filename",
+            "description": "<p>文件名</p>"
+          },
+          {
+            "group": "Success 200",
+            "type": "string",
+            "optional": false,
+            "field": "data.token",
+            "description": "<p>令牌</p>"
+          },
+          {
+            "group": "Success 200",
+            "type": "number",
+            "optional": false,
+            "field": "code",
+            "description": "<p>0成功 其他为错误</p>"
+          },
+          {
+            "group": "Success 200",
+            "type": "number",
+            "optional": false,
+            "field": "msg",
+            "description": "<p>成功或失败的信息</p>"
+          }
+        ]
+      }
+    },
+    "sampleRequest": [
+      {
+        "url": "/token/qiniu/head"
+      }
+    ],
+    "version": "1.0.0",
+    "filename": "src/routes/token.ts",
+    "groupTitle": "Token",
+    "header": {
+      "fields": {
+        "Header": [
+          {
+            "group": "Header",
+            "type": "String",
+            "optional": false,
+            "field": "oxoxauth",
+            "description": "<p>授权，通过登录获取，虽然每个api都有，但是仅是需要授权的api才需要</p>"
+          }
+        ]
+      }
+    }
+  },
+  {
+    "type": "post",
+    "url": "/upload",
+    "title": "上传图片",
+    "description": "<p>上传</p>",
+    "name": "upload",
+    "group": "Upload",
+    "parameter": {
+      "fields": {
+        "Parameter": [
+          {
+            "group": "Parameter",
+            "type": "File",
+            "optional": false,
+            "field": "img",
+            "description": "<p>图片</p>"
+          }
+        ]
+      }
+    },
+    "success": {
+      "fields": {
+        "Success 200": [
+          {
+            "group": "Success 200",
+            "type": "Object",
+            "optional": false,
+            "field": "data",
+            "description": ""
+          },
+          {
+            "group": "Success 200",
+            "type": "number",
+            "optional": false,
+            "field": "code",
+            "description": "<p>0成功 其他为错误</p>"
+          },
+          {
+            "group": "Success 200",
+            "type": "number",
+            "optional": false,
+            "field": "msg",
+            "description": "<p>成功或失败的信息</p>"
+          }
+        ]
+      }
+    },
+    "sampleRequest": [
+      {
+        "url": "/upload/img"
+      }
+    ],
+    "version": "1.0.0",
+    "filename": "src/routes/upload.ts",
+    "groupTitle": "Upload",
+    "header": {
+      "fields": {
+        "Header": [
+          {
+            "group": "Header",
+            "type": "String",
+            "optional": false,
+            "field": "oxoxauth",
+            "description": "<p>授权，通过登录获取，虽然每个api都有，但是仅是需要授权的api才需要</p>"
+          }
+        ]
+      }
+    }
+  },
+  {
+    "type": "delete",
+    "url": "/users/:id",
+    "title": "deleteUser",
+    "description": "<p>删除用户</p>",
+    "name": "deleteUser",
+    "group": "User",
+    "parameter": {
+      "fields": {
+        "Parameter": [
+          {
+            "group": "Parameter",
+            "type": "number",
+            "optional": false,
+            "field": "id",
+            "description": "<p>id</p>"
+          }
+        ]
+      }
+    },
+    "success": {
+      "fields": {
+        "Success 200": [
+          {
+            "group": "Success 200",
+            "type": "string",
+            "optional": false,
+            "field": "data.account",
+            "description": "<p>账号</p>"
+          },
+          {
+            "group": "Success 200",
+            "type": "number",
+            "optional": false,
+            "field": "data.qq",
+            "description": "<p>none</p>"
+          },
+          {
+            "group": "Success 200",
+            "type": "string",
+            "optional": false,
+            "field": "data.password",
+            "description": "<p>qq号码</p>"
+          },
+          {
+            "group": "Success 200",
+            "type": "string",
+            "optional": false,
+            "field": "data.user_name",
+            "description": "<p>用户名</p>"
+          },
+          {
+            "group": "Success 200",
+            "type": "string",
+            "optional": false,
+            "field": "data.token",
+            "description": "<p>凭证</p>"
+          },
+          {
+            "group": "Success 200",
+            "type": "string",
+            "optional": false,
+            "field": "data.priv",
+            "description": "<p>权限</p>"
+          },
+          {
+            "group": "Success 200",
+            "type": "string",
+            "optional": false,
+            "field": "data.mail",
+            "description": "<p>邮箱</p>"
+          },
+          {
+            "group": "Success 200",
+            "type": "string",
+            "optional": false,
+            "field": "data.head_path",
+            "description": "<p>头像url</p>"
+          },
+          {
+            "group": "Success 200",
+            "type": "string",
+            "optional": false,
+            "field": "data.ip",
+            "description": "<p>注册的ip地址</p>"
+          },
+          {
+            "group": "Success 200",
+            "type": "string",
+            "optional": false,
+            "field": "data.language",
+            "description": "<p>语言</p>"
+          },
+          {
+            "group": "Success 200",
+            "type": "object",
+            "optional": false,
+            "field": "data.bot_love",
+            "description": "<p>角色好感度</p>"
+          },
+          {
+            "group": "Success 200",
+            "type": "number",
+            "optional": false,
+            "field": "data.id",
+            "description": "<p>用户id</p>"
+          },
+          {
+            "group": "Success 200",
+            "type": "number",
+            "optional": false,
+            "field": "code",
+            "description": "<p>0成功 其他为错误</p>"
+          },
+          {
+            "group": "Success 200",
+            "type": "number",
+            "optional": false,
+            "field": "msg",
+            "description": "<p>成功或失败的信息</p>"
+          }
+        ]
+      }
+    },
+    "version": "1.0.0",
+    "filename": "src/routes/admin/doc.ts",
+    "groupTitle": "User",
+    "header": {
+      "fields": {
+        "Header": [
+          {
+            "group": "Header",
+            "type": "String",
+            "optional": false,
+            "field": "oxoxauth",
+            "description": "<p>授权，通过登录获取，虽然每个api都有，但是仅是需要授权的api才需要</p>"
+          }
+        ]
+      }
+    }
+  },
+  {
+    "type": "get",
+    "url": "/users/:id",
+    "title": "getUser",
+    "description": "<p>通过id获取用户信息</p>",
+    "name": "getUser",
+    "group": "User",
+    "parameter": {
+      "fields": {
+        "Parameter": [
+          {
+            "group": "Parameter",
+            "type": "number",
+            "optional": false,
+            "field": "id",
+            "description": "<p>id</p>"
+          }
+        ]
+      }
+    },
+    "success": {
+      "fields": {
+        "Success 200": [
+          {
+            "group": "Success 200",
+            "type": "string",
+            "optional": false,
+            "field": "data.account",
+            "description": "<p>账号</p>"
+          },
+          {
+            "group": "Success 200",
+            "type": "number",
+            "optional": false,
+            "field": "data.qq",
+            "description": "<p>none</p>"
+          },
+          {
+            "group": "Success 200",
+            "type": "string",
+            "optional": false,
+            "field": "data.password",
+            "description": "<p>qq号码</p>"
+          },
+          {
+            "group": "Success 200",
+            "type": "string",
+            "optional": false,
+            "field": "data.user_name",
+            "description": "<p>用户名</p>"
+          },
+          {
+            "group": "Success 200",
+            "type": "string",
+            "optional": false,
+            "field": "data.token",
+            "description": "<p>凭证</p>"
+          },
+          {
+            "group": "Success 200",
+            "type": "string",
+            "optional": false,
+            "field": "data.priv",
+            "description": "<p>权限</p>"
+          },
+          {
+            "group": "Success 200",
+            "type": "string",
+            "optional": false,
+            "field": "data.mail",
+            "description": "<p>邮箱</p>"
+          },
+          {
+            "group": "Success 200",
+            "type": "string",
+            "optional": false,
+            "field": "data.head_path",
+            "description": "<p>头像url</p>"
+          },
+          {
+            "group": "Success 200",
+            "type": "string",
+            "optional": false,
+            "field": "data.ip",
+            "description": "<p>注册的ip地址</p>"
+          },
+          {
+            "group": "Success 200",
+            "type": "string",
+            "optional": false,
+            "field": "data.language",
+            "description": "<p>语言</p>"
+          },
+          {
+            "group": "Success 200",
+            "type": "object",
+            "optional": false,
+            "field": "data.bot_love",
+            "description": "<p>角色好感度</p>"
+          },
+          {
+            "group": "Success 200",
+            "type": "number",
+            "optional": false,
+            "field": "data.id",
+            "description": "<p>用户id</p>"
+          },
+          {
+            "group": "Success 200",
+            "type": "number",
+            "optional": false,
+            "field": "code",
+            "description": "<p>0成功 其他为错误</p>"
+          },
+          {
+            "group": "Success 200",
+            "type": "number",
+            "optional": false,
+            "field": "msg",
+            "description": "<p>成功或失败的信息</p>"
+          }
+        ]
+      }
+    },
+    "version": "1.0.0",
+    "filename": "src/routes/admin/doc.ts",
+    "groupTitle": "User",
+    "header": {
+      "fields": {
+        "Header": [
+          {
+            "group": "Header",
+            "type": "String",
+            "optional": false,
+            "field": "oxoxauth",
+            "description": "<p>授权，通过登录获取，虽然每个api都有，但是仅是需要授权的api才需要</p>"
+          }
+        ]
+      }
+    }
+  },
+  {
+    "type": "post",
+    "url": "/users",
+    "title": "postUser",
+    "description": "<p>新建用户</p>",
+    "name": "postUser",
+    "group": "User",
+    "parameter": {
+      "fields": {
+        "Parameter": [
+          {
+            "group": "Parameter",
+            "type": "number",
+            "optional": false,
+            "field": "id",
+            "description": "<p>用户id</p>"
+          }
+        ]
+      }
+    },
+    "success": {
+      "fields": {
+        "Success 200": [
+          {
+            "group": "Success 200",
+            "type": "string",
+            "optional": false,
+            "field": "data.account",
+            "description": "<p>账号</p>"
+          },
+          {
+            "group": "Success 200",
+            "type": "number",
+            "optional": false,
+            "field": "data.qq",
+            "description": "<p>none</p>"
+          },
+          {
+            "group": "Success 200",
+            "type": "string",
+            "optional": false,
+            "field": "data.password",
+            "description": "<p>qq号码</p>"
+          },
+          {
+            "group": "Success 200",
+            "type": "string",
+            "optional": false,
+            "field": "data.user_name",
+            "description": "<p>用户名</p>"
+          },
+          {
+            "group": "Success 200",
+            "type": "string",
+            "optional": false,
+            "field": "data.token",
+            "description": "<p>凭证</p>"
+          },
+          {
+            "group": "Success 200",
+            "type": "string",
+            "optional": false,
+            "field": "data.priv",
+            "description": "<p>权限</p>"
+          },
+          {
+            "group": "Success 200",
+            "type": "string",
+            "optional": false,
+            "field": "data.mail",
+            "description": "<p>邮箱</p>"
+          },
+          {
+            "group": "Success 200",
+            "type": "string",
+            "optional": false,
+            "field": "data.head_path",
+            "description": "<p>头像url</p>"
+          },
+          {
+            "group": "Success 200",
+            "type": "string",
+            "optional": false,
+            "field": "data.ip",
+            "description": "<p>注册的ip地址</p>"
+          },
+          {
+            "group": "Success 200",
+            "type": "string",
+            "optional": false,
+            "field": "data.language",
+            "description": "<p>语言</p>"
+          },
+          {
+            "group": "Success 200",
+            "type": "object",
+            "optional": false,
+            "field": "data.bot_love",
+            "description": "<p>角色好感度</p>"
+          },
+          {
+            "group": "Success 200",
+            "type": "number",
+            "optional": false,
+            "field": "data.id",
+            "description": "<p>用户id</p>"
+          },
+          {
+            "group": "Success 200",
+            "type": "number",
+            "optional": false,
+            "field": "code",
+            "description": "<p>0成功 其他为错误</p>"
+          },
+          {
+            "group": "Success 200",
+            "type": "number",
+            "optional": false,
+            "field": "msg",
+            "description": "<p>成功或失败的信息</p>"
+          }
+        ]
+      }
+    },
+    "version": "1.0.0",
+    "filename": "src/routes/admin/doc.ts",
+    "groupTitle": "User",
+    "header": {
+      "fields": {
+        "Header": [
+          {
+            "group": "Header",
+            "type": "String",
+            "optional": false,
+            "field": "oxoxauth",
+            "description": "<p>授权，通过登录获取，虽然每个api都有，但是仅是需要授权的api才需要</p>"
+          }
+        ]
+      }
+    }
+  },
+  {
+    "type": "put",
+    "url": "/users/:id",
+    "title": "putUser",
+    "description": "<p>修改用户</p>",
+    "name": "putUser",
+    "group": "User",
+    "parameter": {
+      "fields": {
+        "Parameter": [
+          {
+            "group": "Parameter",
+            "type": "string",
+            "optional": false,
+            "field": "account",
+            "description": "<p>账号</p>"
+          },
+          {
+            "group": "Parameter",
+            "type": "number",
+            "optional": false,
+            "field": "qq",
+            "description": "<p>none</p>"
+          },
+          {
+            "group": "Parameter",
+            "type": "string",
+            "optional": false,
+            "field": "password",
+            "description": "<p>qq号码</p>"
+          },
+          {
+            "group": "Parameter",
+            "type": "string",
+            "optional": false,
+            "field": "user_name",
+            "description": "<p>用户名</p>"
+          },
+          {
+            "group": "Parameter",
+            "type": "string",
+            "optional": false,
+            "field": "token",
+            "description": "<p>凭证</p>"
+          },
+          {
+            "group": "Parameter",
+            "type": "string",
+            "optional": false,
+            "field": "priv",
+            "description": "<p>权限</p>"
+          },
+          {
+            "group": "Parameter",
+            "type": "string",
+            "optional": false,
+            "field": "mail",
+            "description": "<p>邮箱</p>"
+          },
+          {
+            "group": "Parameter",
+            "type": "string",
+            "optional": false,
+            "field": "head_path",
+            "description": "<p>头像url</p>"
+          },
+          {
+            "group": "Parameter",
+            "type": "string",
+            "optional": false,
+            "field": "ip",
+            "description": "<p>注册的ip地址</p>"
+          },
+          {
+            "group": "Parameter",
+            "type": "string",
+            "optional": false,
+            "field": "language",
+            "description": "<p>语言</p>"
+          },
+          {
+            "group": "Parameter",
+            "type": "object",
+            "optional": false,
+            "field": "bot_love",
+            "description": "<p>角色好感度</p>"
+          },
+          {
+            "group": "Parameter",
+            "type": "number",
+            "optional": false,
+            "field": "id",
+            "description": "<p>用户id</p>"
+          }
+        ]
+      }
+    },
+    "success": {
+      "fields": {
+        "Success 200": [
+          {
+            "group": "Success 200",
+            "type": "string",
+            "optional": false,
+            "field": "data.account",
+            "description": "<p>账号</p>"
+          },
+          {
+            "group": "Success 200",
+            "type": "number",
+            "optional": false,
+            "field": "data.qq",
+            "description": "<p>none</p>"
+          },
+          {
+            "group": "Success 200",
+            "type": "string",
+            "optional": false,
+            "field": "data.password",
+            "description": "<p>qq号码</p>"
+          },
+          {
+            "group": "Success 200",
+            "type": "string",
+            "optional": false,
+            "field": "data.user_name",
+            "description": "<p>用户名</p>"
+          },
+          {
+            "group": "Success 200",
+            "type": "string",
+            "optional": false,
+            "field": "data.token",
+            "description": "<p>凭证</p>"
+          },
+          {
+            "group": "Success 200",
+            "type": "string",
+            "optional": false,
+            "field": "data.priv",
+            "description": "<p>权限</p>"
+          },
+          {
+            "group": "Success 200",
+            "type": "string",
+            "optional": false,
+            "field": "data.mail",
+            "description": "<p>邮箱</p>"
+          },
+          {
+            "group": "Success 200",
+            "type": "string",
+            "optional": false,
+            "field": "data.head_path",
+            "description": "<p>头像url</p>"
+          },
+          {
+            "group": "Success 200",
+            "type": "string",
+            "optional": false,
+            "field": "data.ip",
+            "description": "<p>注册的ip地址</p>"
+          },
+          {
+            "group": "Success 200",
+            "type": "string",
+            "optional": false,
+            "field": "data.language",
+            "description": "<p>语言</p>"
+          },
+          {
+            "group": "Success 200",
+            "type": "object",
+            "optional": false,
+            "field": "data.bot_love",
+            "description": "<p>角色好感度</p>"
+          },
+          {
+            "group": "Success 200",
+            "type": "number",
+            "optional": false,
+            "field": "data.id",
+            "description": "<p>用户id</p>"
+          },
+          {
+            "group": "Success 200",
+            "type": "number",
+            "optional": false,
+            "field": "code",
+            "description": "<p>0成功 其他为错误</p>"
+          },
+          {
+            "group": "Success 200",
+            "type": "number",
+            "optional": false,
+            "field": "msg",
+            "description": "<p>成功或失败的信息</p>"
+          }
+        ]
+      }
+    },
+    "version": "1.0.0",
+    "filename": "src/routes/admin/doc.ts",
+    "groupTitle": "User",
+    "header": {
+      "fields": {
+        "Header": [
+          {
+            "group": "Header",
+            "type": "String",
+            "optional": false,
+            "field": "oxoxauth",
+            "description": "<p>授权，通过登录获取，虽然每个api都有，但是仅是需要授权的api才需要</p>"
+          }
+        ]
+      }
+    }
+  }
+]

@@ -21,9 +21,9 @@ let parser = yargs(hideBin(process.argv)).options({
     s: { type: 'string', alias: 'src', demandOption: true },//api_data.json path
     d: { type: 'string', alias: 'dist', demandOption: true },//dits path
     p: { type: 'string', alias: 'package' },//kotlin package name
-    tst: { type: 'string', alias: 'ts-template' },//
+    tst: { type: 'string', alias: 'ts-template' },//typescript template 
 })
-    .usage('Usage: apibuilder -t [type] -s [api_data.json path] -d [dist path]  [-p] [kotlin package]');
+    .usage('Usage: apidoc-codegen -t [type] -s [api_data.json path] -d [dist path]  [-p] [kotlin package]');
 
 
 (async () => {
@@ -55,7 +55,8 @@ let parser = yargs(hideBin(process.argv)).options({
         fs.writeFileSync(path.join(dist_path , "/Api.kt"), apiCode)
     } else if (argv.type == "ts") {
         let tsBuilder = new TsBuilder(api_data)
-        let template = fs.readFileSync(path.join(__dirname, "../../template/ts.txt")).toString();
+        let templatePath = argv.tst ?? path.join(__dirname, "../../template/ts.txt")
+        let template = fs.readFileSync(templatePath).toString();
         tsBuilder.template = template;
         //console.log(template)
         let code = tsBuilder.build();
