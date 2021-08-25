@@ -69,13 +69,12 @@ import java.io.File
       filed = "@Query";
     }
 
-    //获取返回类型 
-    let ktType = this.getReturnType(apiData)// 
-    let urlData = KotlinBuilder.getUrlData(apiData.url);
+    let ktType = this.getReturnType(apiData) ; // 获取返回类型 
+    let urlData = KotlinBuilder.getUrlData(apiData.url); // 获取返回类型 
     let parameter = this.getFields(apiData.parameter?.fields);
 
      parameter?.forEach((p:Field, i:number) => {
-      if (urlData.names.find(el => { return el == p.field })) { return; } //检测出path参数，避免重复
+      if (urlData.names.find(el => { return el == p.field })) { return; } // 检测出path参数，避免重复
       if (i !== 0 || urlData.names.length > 0) params += `, `
       let param = p.field
       let type = this.toKotlinType(p.type)
@@ -94,7 +93,11 @@ import java.io.File
     this.saveToApiclass(apiData.group, code);
   }
 
-
+  /**
+   * 
+   * @param url 
+   * @returns 
+   */
   static getUrlData(url: string) {
     let s = {
       url: url,// 转化后的api

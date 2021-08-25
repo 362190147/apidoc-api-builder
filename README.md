@@ -1,11 +1,16 @@
 ##
-### 本项目暂时和apidoc官方没有任何关系，只是利用apidoc生成的文件夹下的api_data.json文件，生成可供 typescript 调用的方法 或者 kotlin 的retrofit interface 目前kotlin版本还不实用，还在优化中
+### 利用apidoc文档 生成调用代码。 目前计划生成 typescript 和 kotlin 的 interface(自行通过 retrofit 生成可调用代码) 和 数据类。视情况添加其他项目语言
 
 [本项目 github 地址](https://github.com/362190147/apidoc-codegen.git)
 
+> 注意:本项目暂时和apidoc官方没有任何关系，只是利用apidoc生成的文件夹下的api_data.json文件
+
+
 本项目依赖apidoc的生成文档部分文件，需要先了解[Apidoc](https://apidocjs.com/)，并生成文档。
 
-### 本项目优点，只需严谨可以用apidoc代码就可以生成可调用代码
+### 本项目优点：
+1.写一次文档即可生成 可调用的代码，加快开发效率。
+2.后端改了以后，前端可能会漏修改掉调用代码。例如调用增加必须的参数，而前端忘记添加会有发生运行错误，使用生成代码，就不会漏掉。调用缺少参数就会在编译时检测出错误。
 
 安装 
 ``` cmd

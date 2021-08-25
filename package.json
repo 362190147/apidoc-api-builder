@@ -1,6 +1,6 @@
 {
   "name": "apidoc-codegen",
-  "version": "0.0.5",
+  "version": "0.0.6",
   "description": "Using apidoc to generate typescript or kotlin code",
   "main": "dist/index.js",
   "scripts": {
