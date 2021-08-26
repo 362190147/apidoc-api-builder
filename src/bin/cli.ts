@@ -45,7 +45,7 @@ let parser = yargs(hideBin(process.argv)).options({
     if (argv.type == "kotlin") {
         let packageName = "ltd.oxox.apidoc";
         if (argv.p) {
-            packageName = packageName;
+            packageName = argv.p;
         }
 
         let builder = new KotlinBuilder(api_data);
