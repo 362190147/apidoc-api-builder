@@ -111,7 +111,7 @@ import java.io.File
         s.names.push(name);
         if (i != 0) s.param = ", "
         s.param += `@Path("${name}") ${name}:String`
-        console.log(el);
+        // console.log(el);
       })
     }
     s.url = url.replace(/\:(\w+)/g, "{$1}");
@@ -130,13 +130,14 @@ import java.io.File
     let success = this.getFields(apiData.success?.fields);
 
     success?.forEach((el:Field, i:number) => {
-      if (/data/.test(el.field)) {
+      if (/data/.test(el.field) ) {
         if (el.field == "data") {
           ktType = this.toKotlinType(el.type)
           dataClass.name = this.getNotArrayType(el.type)
           dataClass.codeHead = `data class ${dataClass.name}(`
           //console.log(ktType);
         }
+        
         let matched = el.field.match(/data\.(\w+)/)
         if (matched) {
           if (dataClass.codeBody != "") { dataClass.codeBody += "," }
@@ -159,6 +160,7 @@ import java.io.File
       case "Boolean":
       case "boolean":
       case "Object":
+      case "object":
         return
       default:
         break;
@@ -201,9 +203,10 @@ import java.io.File
       case "number":
       case "Number":
         return "Int"
-      case "Boolean":
       case "boolean":
+      case "Boolean":
         return "Boolean"
+      case "object":
       case "Object":
         return "Object";
       case "float":

@@ -39,15 +39,16 @@ let parser = yargs(hideBin(process.argv)).options({
     if (!argv.t) {
         return console.error("miss argv t");
     }
+
+    let packageName = "ltd.oxox.apidoc";
+    if (argv.p) {
+        packageName = argv.p;
+    }
+
     let api_data = fs.readFileSync(argv.s).toString()
     let dist_path = argv.d
 
     if (argv.type == "kotlin") {
-        let packageName = "ltd.oxox.apidoc";
-        if (argv.p) {
-            packageName = argv.p;
-        }
-
         let builder = new KotlinBuilder(api_data);
         let apiCode = builder.BuildApiClass(packageName)
         let dataCode = builder.BuildDataClass(packageName)
@@ -65,9 +66,4 @@ let parser = yargs(hideBin(process.argv)).options({
         fs.writeFileSync(path.join(dist_path, "/data.ts"), code)
         
     }
-
-
-
-
-
 })();
